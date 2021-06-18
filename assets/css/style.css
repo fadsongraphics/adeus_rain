@@ -1,0 +1,547 @@
+body{
+	font-family: "gilroy";
+	letter-spacing: 0.05em;
+	background-image: url("../images/banner.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	z-index: 10;
+}
+
+.device-icon{
+	width: 40px;
+	height: 40px;
+}
+
+.device-text{
+	font-weight: bold;
+	font-size: 12px;
+	color: #399efd;
+}
+
+.d-inline{
+	display: inline;
+}
+
+.ml-5{
+	margin-left: 5px !important;
+}
+
+.g-div{
+	background-color: #D9D8DD;
+}
+
+.mt-9{
+	margin-top: 9px !important;
+}
+
+.float-right{
+	float: right !important;
+}
+
+.w-100{
+	width: 100% !important;
+}
+
+.w-90{
+	width: 90% !important;
+}
+
+.w-80{
+	width: 80% !important;
+}
+
+.h-400{
+    height: 400px;
+}
+
+.w-100{
+    width: 100%;
+}
+
+.energy-card{
+    height: 250px;
+}
+
+.pos-top{
+    position: absolute;
+    top: 0px;
+}
+
+.pos-left-center{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.pos-center-bottom{
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pos-bottom{
+    position: absolute;
+    bottom: 0px;
+}
+
+.pos-br{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.glass{
+    background: white;
+    background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 1.0),
+        rgba(255, 255, 255, 0.5)
+    );
+}
+
+.glass-1{
+    background: linear-gradient(
+        to right bottom,
+        rgba(255, 255, 255, 1.0),
+        rgba(255, 255, 255, 0.9)
+    );
+}
+
+.br-20{
+    border-radius: 20px;
+}
+
+.bg-1{
+    background: #0EA903;
+}
+
+.bg-2{
+    background: #0055FF;
+}
+
+p{
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.sidenav{
+	width: 210px;
+	height: 100vh;
+	float:left;
+	position: fixed;
+}
+
+.sidenav-top{
+    width: inherit;
+    position: absolute;
+    top: 0px;
+    height: 70%;
+    border-radius: 1.5rem;
+}
+
+.sidenav-bottom{
+    width: inherit;
+    position: absolute;
+    bottom: 0px;
+    height: 30%;
+    text-align: center;
+}
+
+
+.time-card {
+    background-image: url("../images/weather.jpeg");
+    background-size: cover;
+    width: 100%;
+    border-radius: 20px;
+    color: white;
+    position: relative;
+    padding: 10px 15px 10px 15px;
+}
+
+.sidenav-bottom img{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 150px;
+    height: 150px;
+    margin: auto;
+}
+
+.sidenav-pad{
+	padding: 20px;
+	padding-top: 20px;
+}
+
+.sidenav-item{
+	font-size: 15px !important;
+	padding: 5px 10px;
+	color: #333;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	transition: 0.3s;
+	font-weight: 500;
+}
+.sidenav-item:hover{
+	background: #399efd;
+	cursor: pointer;
+}
+
+.sidenav-item:hover .sidenav-icon{
+	margin-right: 25px;
+}
+
+.sidenav-active{
+	background: #399efd;
+	color: #fff;
+}
+
+.sidenav-logo{
+    width: 100%;
+    padding: 35px 20px 20px 20px;
+    text-align: center;
+}
+
+.sidenav-logo img{
+    width: 100%;
+}
+
+.sidenav-icon{
+	margin-right: 20px;
+	font-size: 25px !important;
+	float: left;
+	transition: .3s;
+}
+
+.sidenav-txt{
+    position: relative;
+	margin-left: 6px;
+	float: left;
+	padding-top: 7px;
+	font-weight: bold;
+}
+
+.page-content{
+	width: calc(100% - 210px);
+	float: left;
+	margin-left: 210px;
+}
+
+.page-nav{
+    padding: 20px;
+}
+
+#page{
+    padding: 20px;
+    padding-top: 0px;
+}
+
+.search-icon{
+	display: inline-block;
+	font-size: 20px !important;
+	text-align: center;
+	float: right;
+	transition: 0.3s;
+	margin-top: 7px;
+	height: 50px;
+	margin-right: 20px;
+	cursor: pointer;
+}
+
+/*
+.search-icon:hover{
+	color: grey
+}
+*/
+
+.nav-info{
+	padding-top: 20px;
+	font-size: 16px !important;
+	float:left;
+	border-radius: 10px;
+	transition: 0.3s;
+}.nav-info:hover{
+	background: #f5f5f5;
+}
+
+.nav-profile{
+	float: right;
+	width: 40px;
+	height: 40px;
+	background: grey;
+	border-radius: 100px;
+	margin-top: 12px;
+	margin-left: 20px;
+}
+.nav-rates{
+	float: right;
+	margin-left: 10px;
+	padding: 15px;
+	padding-bottom: 15px;
+	box-shadow: 0 0 30px 0 rgb(0,0,0,0.05);
+	border-radius: 10px;
+	font-size: 14px !important;
+	margin-top: 5px;
+	background: #fff;
+}
+
+.nav-rate-energy{
+	font-weight: bolder;
+	border-right: 2px solid #cfcfcf;
+	padding-right: 30px;
+	float: left;
+	display: inline-block;
+}
+
+.nav-rate-icon-red{
+	width: 25px;
+	float: left;
+	margin-left: 30px;
+	margin-top: -2px;
+}
+
+.nav-rate-price{
+	float: left;
+	margin-left: 10px;
+	font-weight: bolder;
+	transition: 0.3s;
+}.nav-rate-price:hover{
+	color: #418bca;
+}
+
+.main-card{
+	position: relative;
+	width: 100%;
+	min-height: 270px;
+	background: #fff;
+	padding: 30px;
+	border-radius: 20px;
+	margin-top: 20px;
+}
+
+.main-card-custom{
+	position: relative;
+	width: 100%;
+	background: #fff;
+	padding: 30px;
+	border-radius: 20px;
+	margin-top: 20px;
+}
+
+.transaction-card{
+	width:45px;
+	height:45px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px 0 rgb(0,0,0,0.1);
+	background:#fff;
+	background-size: cover;
+	transition: 0.1s;
+	z-index: 10;
+	font-size: 40px !important;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.canvasjs-chart-credit{
+	display:none
+}
+
+.summary-card{
+	background: url(https://ymcaibadan.org/assets/interior-has-armchair-empty-white-wall-background-3d-rendering.jpg) center no-repeat;
+	background-size: cover;
+}
+
+.icon{
+	width:80px;
+	float:left;
+	margin: 8px;
+	cursor: pointer;
+}
+.icon-square{
+	margin: auto;
+	width:60px;
+	height:60px;
+	border-radius: 10px;
+	/*box-shadow: 0 0 10px 0 rgb(0,0,0,0.1);*/
+	background:#fff url(images/abstract1.png) center no-repeat;
+	background-size: cover;
+	transition: 0.1s;
+	z-index: 10;
+}.icon:hover .icon-square{
+	transform: translateY(-5px)
+}
+.icon-text{
+	margin-top: 5px;
+	text-align: center;
+	font-size: 12px !important;
+	color:#333;
+	font-weight: bolder;
+}
+.icon-plus{
+	color:#418bca;
+	font-size: 40px !important;
+	line-height: 55px;
+	text-align: center;
+	transition: 0.3s;
+}
+.icon-plus:hover{
+	background: #418bca;
+	color: #fff;
+	line-height: 45px;
+}
+
+.icon-circle{
+	width:10px;
+	height:10px;
+	border-radius: 100px;
+	background: red;
+	position:relative;
+	float:right;
+	left:-5px;
+	margin-top:5px;
+	z-index:15;
+	transition:0.3s
+}.icon:hover .icon-circle{
+	transform: translateY(-15px)
+}
+
+.offcanvas{
+	background: #fff url(images/abstract2.png) center no-repeat;
+	background-size: cover;
+}
+
+.text-lg{
+	font-size: 25px;
+}
+
+.custom-input{
+	width: 60%;
+	display: inline;
+	height: 40px;
+	border-radius: 10px;
+}
+
+.custom-input-2{
+	width: 50%;
+	display: inline;
+	height: 40px;
+	border-radius: 10px;
+}
+
+.pos-top{
+	position: absolute;
+	top: 0px;
+}
+
+.pos-center{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.pos-bottom{
+	position: absolute;
+	bottom: 0px;
+}
+
+.custom-select{
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	border-radius: 30px !important;
+}
+
+.txt-et{
+	font-weight: bold;
+}
+
+.txt-e{
+	font-weight: bolder !important;
+	font-size: 58px;
+}
+
+.font-weight-bold{
+	font-weight: bold;
+}
+
+.custom-table tr th,td{
+    padding: 20px !important;
+}
+
+.br-0{
+    border-radius: 0px;
+}
+
+.br-left{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.br-right{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 10px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 24px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 8px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
