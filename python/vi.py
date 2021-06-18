@@ -137,7 +137,7 @@ def intent2action(intent):
 
           soundObj22.play()
           time.sleep(2)
-          text += f'{response}'
+          text += f'{rerfsponse}'
 
     else:
       soundObj1.play()
