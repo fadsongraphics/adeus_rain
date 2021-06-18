@@ -8,8 +8,8 @@ if(post('tts')){
 	
 	$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
 
-	if(@$nlp_q = file_get_contents("/home/pi/trial2/nlp_q.txt")){
-		$nlp_r = file_get_contents("/home/pi/trial2/nlp_r.txt");
+	if(@$nlp_q = file_get_contents("/var/www/html/python/nlp_q.txt")){
+		$nlp_r = file_get_contents("/var/www/html/python/nlp_r.txt");
 
 		$nlp_array = array(
 			"trigger"=>$trigger,
@@ -49,7 +49,7 @@ if (post('add_device')) {
 		}
 	}
 
-	file_put_contents("../nlp/devices.txt", json_encode($devices));
+	file_put_contents("/var/www/html/nlp/devices.txt", json_encode($devices));
 
 		}
 	// header("Location: index.php");

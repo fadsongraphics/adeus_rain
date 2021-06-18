@@ -268,6 +268,7 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 									if( time()-$last_active < 60){
 										$active=true;
 									}
+									$active=true;
 									?>
 
                                 <div class="col-6 p-0">

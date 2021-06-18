@@ -58,6 +58,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 									if( time()-$last_active < 60){
 										$active=true;
 									}
+									$active=true;
 									?>
 
                                 <div class="col-6 p-0">
