@@ -1,0 +1,67 @@
+rfkill unblock all
+
+sudo apt-get update
+
+
+sudo apt-get install git -y
+
+echo "Setting Up the webserver"
+sudo apt-get install apache2 -y
+sudo apt-get install php -y
+sudo apt-get install php-sqlite3 -y
+
+cd /var/www/html
+sudo rm index.html
+cd /var/www
+sudo chmod a+w -R /var/www/html
+sudo chmod a+x -R /var/www/html
+
+
+echo "Setting Up python"
+echo "Setting Up python"
+echo "Setting Up python"
+echo "Setting Up python"
+echo "Setting Up python"
+sudo apt-get install python3-pip -y
+cd /home/pi
+pip3 install pandas
+pip3 install vosk
+pip3 install scikit-learn
+pip3 install pyttsx3
+pip3 install soundfile
+pip3 install wordtodigits
+pip3 install sounddevice
+pip3 install pygame
+sudo apt-get install -y libsdl2-mixer-2.0-0
+sudo apt-get install -y libatlas-base-dev 
+sudo apt-get install libportaudio2
+sudo apt-get install espeak -y
+sudo chmod a+w -R /home/pi/trial2
+
+
+
+echo "Setting up Kiosk"
+echo "Setting up Kiosk"
+echo "Setting up Kiosk"
+echo "Setting up Kiosk"
+echo "Setting up Kiosk"
+echo "Setting up Kiosk"
+echo "Setting up Kiosk"
+sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox -y
+sudo apt-get install --no-install-recommends chromium-browser -y
+
+wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/autostart.txt
+sudo cp -f autostart.txt /etc/xdg/openbox/autostart
+wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/environment.txt
+sudo cp -f environment.txt /etc/xdg/openbox/environment
+wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/rc.local.txt
+sudo cp -f rc.local.txt /etc/rc.local
+
+
+echo "Downloading from github"
+cd /var/www
+sudo rm -r html
+sudo git clone https://github.com/fadsongraphics/adeus_rain.git html
+sudo chmod a+w -R /var/www/html
+sudo chmod a+x -R /var/www/html
+
