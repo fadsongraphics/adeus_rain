@@ -56,6 +56,8 @@ wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/
 sudo cp -f environment.txt /etc/xdg/openbox/environment
 wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/rc.local.txt
 sudo cp -f rc.local.txt /etc/rc.local
+wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/sudoers.txt
+sudo cp -f sudoers.txt /etc/sudoers
 
 
 echo "Downloading from github"
@@ -64,4 +66,5 @@ sudo rm -r html
 sudo git clone https://github.com/fadsongraphics/adeus_rain.git html
 sudo chmod a+w -R /var/www/html
 sudo chmod a+x -R /var/www/html
+
 

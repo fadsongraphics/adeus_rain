@@ -8,9 +8,6 @@ sudo chmod a+x -R /var/www/html
 
 sudo wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant.conf -iwlan0 -Dnl80211,wext
 
-cd /var/www/html
-sudo git pull
-
 python3 /var/www/html/python/vi.py&
 
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
