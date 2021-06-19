@@ -546,7 +546,7 @@ try:
                 data = q.get()
                 if rec.AcceptWaveform(data):
                     jres = json.loads((rec.Result()))
-                    print (jres)['text'] 
+                    print (jres['text']) 
                     
                     if ("hello vivian" in jres["text"]) or ("hello" in jres["text"]) or ("vivian" in jres["text"]):
                         address = fr"http://localhost/nlp/?trigger=true"
@@ -577,7 +577,7 @@ try:
                             data= q.get()
                             if rec.AcceptWaveform(data):
                                 jres = json.loads((rec.Result()))
-                                print (jres)['text']    
+                                print (jres['text'])    
                            
                                 if jres['text'] != '':
                                   finaltext= wordtodigits.convert((jres["text"]))
@@ -585,7 +585,7 @@ try:
                                   print("Intent: " + user_intent)
                                   adeus_reply = intent2action(user_intent)
                                   print(adeus_reply)
-
+  
                                   f = open("nlp_q.txt","w")
                                   f.write(jres['text'])
                                   f.close()

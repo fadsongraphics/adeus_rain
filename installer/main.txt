@@ -2,28 +2,25 @@ rfkill unblock all
 
 sudo apt-get update
 
-
+#git
 sudo apt-get install git -y
+sudo git config --global user.name "hub1"
+sudo git config --global user.email hub1@adeus.com
 
+
+#webserver
 echo "Setting Up the webserver"
 sudo apt-get install apache2 -y
 sudo apt-get install php -y
 sudo apt-get install php-sqlite3 -y
 
-cd /var/www/html
-sudo rm index.html
-cd /var/www
-sudo chmod a+w -R /var/www/html
-sudo chmod a+x -R /var/www/html
-
-
+#python
 echo "Setting Up python"
 echo "Setting Up python"
 echo "Setting Up python"
 echo "Setting Up python"
 echo "Setting Up python"
 sudo apt-get install python3-pip -y
-cd /home/pi
 pip3 install pandas
 pip3 install vosk
 pip3 install scikit-learn
@@ -36,10 +33,23 @@ sudo apt-get install -y libsdl2-mixer-2.0-0
 sudo apt-get install -y libatlas-base-dev 
 sudo apt-get install libportaudio2
 sudo apt-get install espeak -y
-sudo chmod a+w -R /home/pi/trial2
 
 
+#github
+echo "Downloading from github"
+echo "Downloading from github"
+echo "Downloading from github"
+echo "Downloading from github"
+echo "Downloading from github"
+echo "Downloading from github"
+cd /var/www
+sudo rm -r html
+sudo git clone https://github.com/fadsongraphics/adeus_rain.git html
+sudo chmod a+w -R /var/www/html
+sudo chmod a+x -R /var/www/html
 
+
+#kiosk
 echo "Setting up Kiosk"
 echo "Setting up Kiosk"
 echo "Setting up Kiosk"
@@ -49,21 +59,29 @@ echo "Setting up Kiosk"
 echo "Setting up Kiosk"
 sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox -y
 sudo apt-get install --no-install-recommends chromium-browser -y
-
-wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/autostart.txt
-sudo cp -f autostart.txt /etc/xdg/openbox/autostart
-wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/environment.txt
-sudo cp -f environment.txt /etc/xdg/openbox/environment
-wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/rc.local.txt
-sudo cp -f rc.local.txt /etc/rc.local
-wget https://raw.githubusercontent.com/fadsongraphics/adeus_rain/main/installer/sudoers.txt
-sudo cp -f sudoers.txt /etc/sudoers
+sudo cp -f /var/www/html/installer/autostart.txt /etc/xdg/openbox/autostart
+sudo cp -f /var/www/html/installer/environment.txt /etc/xdg/openbox/environment
 
 
-echo "Downloading from github"
-cd /var/www
-sudo rm -r html
-sudo git clone https://github.com/fadsongraphics/adeus_rain.git html
-sudo chmod a+w -R /var/www/html
-sudo chmod a+x -R /var/www/html
+#hotspot
+echo "Installing hotspot mode"
+sudo apt install hostapd -y
+sudo systemctl unmask hostapd
+sudo systemctl enable hostapd
+sudo apt install dnsmasq -y
+sudo DEBIAN_FRONTEND=noninteractisudo nanve apt install -y netfilter-persistent iptables-persistent
+sudo cp -f /var/www/html/installer/dhcpcd.conf.txt /etc/dhcpcd.conf
+sudo cp -f /var/www/html/installer/routed-ap.conf.txt /etc/sysctl.d/routed-ap.conf
+sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+sudo netfilter-persistent save
+sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+sudo cp -f /var/www/html/installer/dnsmasq.conf.txt /etc/dnsmasq.conf
+sudo cp -f /var/www/html/installer/hostapd.conf.txt /etc/hostapd/hostapd.conf
+
+echo "Configuring home wifi"
+sudo cp -f /var/www/html/installer/wpa_supplicant.txt /etc/wpa_supplicant/wpa_supplicant.conf
+
+echo "Setting up .bash_profile"
+sudo cp -f /var/www/html/installer/bash_profile.txt /home/pi/.bash_profile
+
 

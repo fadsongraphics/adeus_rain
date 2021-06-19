@@ -1,8 +1,8 @@
 <?php
 
 
- $db=new SQLite3('C:/xampp/htdocs/inc/adeus.db');
-// $db=new SQLite3('/var/www/html/inc/adeus.db');
+//  $db=new SQLite3('C:/xampp/htdocs/inc/adeus.db');
+$db=new SQLite3('/var/www/html/inc/adeus.db');
 
 $db->exec("CREATE TABLE IF NOT EXISTS `device_active` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
