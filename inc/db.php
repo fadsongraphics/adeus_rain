@@ -1,7 +1,11 @@
 <?php
 
 
+<<<<<<< HEAD
 //  $db=new SQLite3('C:/xampp/htdocs/inc/adeus.db');
+=======
+ //$db=new SQLite3('C:/xampp/htdocs/inc/adeus.db');
+>>>>>>> ff62fd324c37a2c61df8401ca3396ac06adc8b75
 $db=new SQLite3('/var/www/html/inc/adeus.db');
 
 $db->exec("CREATE TABLE IF NOT EXISTS `device_active` (
