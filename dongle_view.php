@@ -21,14 +21,39 @@ if (get('restart')) {
 	exec("sudo reboot");
 }
 
+if (get('update')) {
+	echo ("Updating... <br>...<br>...<br>");
 
- ?>
+	echo ("Getting files from server...<br>");
+	if(exec("sudo git reset --hard")){
+
+		if(exec("sudo git pull")){
+		echo ("Running bash script...<br>");
+
+			if(exec("source /installer/update.sh")){
+			echo ("Successfull. Rebooting in 5 seconds...<br>");
+			file_put_contents('/installer/update.sh', ' ');
+
+			  echo "<meta http-equiv='refresh'  content='5;url=http://localhost/dongle_view.php?restart=1'>";
+			  exit();
+
+			}
+		}else{
+			die("Could not retrieve files");
+		}
+	}else{
+		die("Could not reset git");
+	}
+}
+
+
+?>
 
  <!DOCTYPE html>
  <html>
  <head>
 
-
+ 	<meta name="viewport" content="width=device-width, inital-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 	<script src="assets/js/jquery-3.6.0.min.js"></script>
 
@@ -43,7 +68,8 @@ if (get('restart')) {
  		margin: auto;
  		background: url('assets/images/dongle_view_bg.png') center no-repeat;
  		background-size: cover;
-		 background-attachment:fixed;
+		background-attachment:fixed;
+		transform: scale(0.95);
  	}
  	a{
  		text-decoration: none;
@@ -64,19 +90,18 @@ if (get('restart')) {
 
  	.bg-circle{
  		font-weight: 600;
- 		font-size: 45px !important;
+ 		font-size: 2em !important;
 		background:#fff;
 		color: #000;
 		font-weight: bolder;
-		height:150px;
 		line-height:150px;
 		border-radius:10px;
 		box-shadow: 0 0 10px 0 rgb(0,0,0,0.2);
-		margin-bottom: 30px;
+		margin-bottom: 20px;
  	}
 
 	.title{
-		font-size: 24px !important;
+		font-size: 1.1em !important;
 		color: black;
 		text-align: center;
 		font-weight: 500;
@@ -182,7 +207,7 @@ if (get('restart')) {
 		text-align: center;
 	}
 
-	.restart{
+	.restart, .update{
 		width: 40px;
 		height: 40px;
 		margin-right: 20px;
@@ -193,6 +218,10 @@ if (get('restart')) {
 		line-height: 40px;
 		font-size: 30px;
 		text-align: center;
+	}
+
+	.update{
+		color: #418bca;
 	}
 
  </style>
@@ -212,6 +241,7 @@ if (get('restart')) {
  		<div class="nav2">
  			<a href="?shutdown=1"><div class="shutdown"><i class='bx bx-power-off'></i></div></a>
  			<a href="?restart=1"><div class="restart"><i class='bx bx-refresh' ></i></div></a>
+ 			<a href="?update=1"><div class="update"><i class='bx bx-download'></i></div></a>
  			<div style="clear: both"></div>
  		</div>
 

@@ -1,16 +1,12 @@
 <?php
 
+session_start();
+
 date_default_timezone_set("Africa/Lagos");
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-
-// if (@file_get_contents("../../pi")) {
-// 	$conn = new mysqli('localhost', 'admin', 'your_password', 'adeus_dongle');
-// }else{
-// 	$conn = new mysqli('localhost', 'root', '', 'adeus');
-// }
 
 require_once "db.php";
 
