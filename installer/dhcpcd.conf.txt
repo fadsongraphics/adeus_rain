@@ -1,0 +1,24 @@
+hostname
+
+clientid
+
+persistent
+
+option rapid_commit
+
+option domain_name_servers, domain_name, domain_search, host_name
+option classless_static_routes
+
+option interface_mtu
+
+require dhcp_server_identifier
+
+slaac private
+
+
+interface wlan0 # these two lines are not strictly needed, as wlan0 uses the default configuration
+    dhcp
+
+interface wlan1 # this defines static addressing and netmask to wlan0, uses only IP V4 addressing and disables wpa_supplicant for this interface
+    static ip_address=10.10.10.10/24
+    nohook wpa_supplicant

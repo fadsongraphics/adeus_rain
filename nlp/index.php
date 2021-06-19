@@ -62,7 +62,7 @@ if (get('key')) {
 
 		if (get('device')) {
 
-			if ($device_id=$db->query("SELECT device_id FROM device_summary WHERE device_name='$device'")->fetchArray(SQLITE3_ASSOC)['device_id']) {
+			if (@$device_id=$db->query("SELECT device_id FROM device_summary WHERE device_name='$device'")->fetchArray(SQLITE3_ASSOC)['device_id']) {
 
 				$sql = "SELECT SUM(last_power) FROM device_power_history WHERE day>'".date('Y-m-d', strtotime($period))."' AND device_id='$device_id'";
 				
@@ -72,7 +72,7 @@ if (get('key')) {
 				
 			}else{
 				$answer['status']=0;
-				$answer['response']=$device.' not found';
+				$answer['response']=' not found';
 			}
 
 		}else{

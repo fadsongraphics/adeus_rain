@@ -137,7 +137,7 @@ def intent2action(intent):
 
           soundObj22.play()
           time.sleep(2)
-          text += f'{rerfsponse}'
+          text += f'{response}'
 
     else:
       soundObj1.play()
@@ -546,7 +546,7 @@ try:
                 data = q.get()
                 if rec.AcceptWaveform(data):
                     jres = json.loads((rec.Result()))
-                    print (jres) 
+                    print (jres)['text'] 
                     
                     if ("hello vivian" in jres["text"]) or ("hello" in jres["text"]) or ("vivian" in jres["text"]):
                         address = fr"http://localhost/nlp/?trigger=true"
@@ -577,11 +577,12 @@ try:
                             data= q.get()
                             if rec.AcceptWaveform(data):
                                 jres = json.loads((rec.Result()))
-                                print (jres)    
+                                print (jres)['text']    
                            
                                 if jres['text'] != '':
                                   finaltext= wordtodigits.convert((jres["text"]))
                                   user_intent = get_intent(finaltext)
+                                  print("Intent: " + user_intent)
                                   adeus_reply = intent2action(user_intent)
                                   print(adeus_reply)
 

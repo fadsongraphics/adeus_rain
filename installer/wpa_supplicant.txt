@@ -1,0 +1,18 @@
+  GNU nano 3.2                                                      /etc/wpa_supplicant/wpa_supplicant.conf
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+
+network={
+ssid="Stephen"
+psk="82435435ef"
+}
+
+network={
+ssid="home"
+psk="82435435ef"
+}
+network={
+ssid="Home"
+psk="82435435ef"
+}
