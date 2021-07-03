@@ -30,9 +30,9 @@ if (get('update')) {
 		if(exec("sudo git pull")){
 		echo ("Running bash script...<br>");
 
-			if(exec("source /installer/update.sh")){
+			if(exec("source installer/update.sh")){
 			echo ("Successfull. Rebooting in 5 seconds...<br>");
-			file_put_contents('/installer/update.sh', ' ');
+			file_put_contents('installer/update.sh', ' ');
 
 			  echo "<meta http-equiv='refresh'  content='5;url=http://localhost/dongle_view.php?restart=1'>";
 			  exit();
