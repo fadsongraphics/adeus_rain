@@ -5,16 +5,22 @@ require_once "conn.php";
 if(get('meter')){
 	$power = get('power');
 
+	if (!isset($_GET['type'])) {
+		$meter='I';
+	}else{
+		$meter = strtoupper(get('type'));
+	}
+
 	
-	$total_power = $db->query("SELECT value FROM meta_data WHERE meta='meter_power'")->fetchArray(SQLITE3_ASSOC)['value'];
+	$total_power = $db->query("SELECT value FROM meta_data WHERE meta='meter_power_$meter'")->fetchArray(SQLITE3_ASSOC)['value'];
 
 	if ($power>$total_power) {
-		$sql = $db->exec("UPDATE meta_data SET value='$power' WHERE meta='meter_power'");
+		$sql = $db->exec("UPDATE meta_data SET value='$power' WHERE meta='meter_power_$meter'");
 
-		$check_history_date = date("Y-m-d");
+		$check_graph_date = date("Y-m-d");
 		$curr_hour = date('H');
 
-		$last_power_q = $db->query("SELECT last_power, day, `24hr_log` FROM meter_power_history ORDER BY id DESC LIMIT 0,1");
+		$last_power_q = $db->query("SELECT last_power, day, `24hr_log` FROM meter_power_graph WHERE meter='$meter' ORDER BY day DESC LIMIT 0,1");
 		
 		if ($last_power = $last_power_q->fetchArray(SQLITE3_ASSOC)) {
 			$power_diff = $power - $total_power;
@@ -25,13 +31,13 @@ if(get('meter')){
 			$power_diff = $power;
 		}
 
-		if ($last_power['day']!==$check_history_date) {
+		if ($last_power['day']!==$check_graph_date) {
 			$summ_array = array($curr_hour=>$power_diff);
 			$ser_summ_array = serialize($summ_array);
-			$db->exec("INSERT INTO meter_power_history(day, last_power, `24hr_log`) VALUES ('$check_history_date','$power_diff', '$ser_summ_array')");
+			$db->exec("INSERT INTO meter_power_graph(meter, day, last_power, `24hr_log`, last_update) VALUES ('$meter', '$check_graph_date','$power_diff', '$ser_summ_array', CURRENT_TIMESTAMP)");
 		}else{
 
-			if ($last_power['day']==$check_history_date) {
+			if ($last_power['day']==$check_graph_date) {
 				$summ_array = unserialize($last_power['24hr_log']);
 				@$summ_array[$curr_hour]+=$power_diff;
 			}else{
@@ -40,7 +46,7 @@ if(get('meter')){
 
 			$ser_summ_array = serialize($summ_array);
 
-			$db->exec("UPDATE meter_power_history SET last_power=last_power+$power_diff, `24hr_log`='$ser_summ_array' WHERE day='$check_history_date'");
+			$db->exec("UPDATE meter_power_graph SET last_power=last_power+$power_diff, `24hr_log`='$ser_summ_array', last_update=CURRENT_TIMESTAMP WHERE day='$check_graph_date' AND meter='$meter'");
 
 
 			}
@@ -59,10 +65,17 @@ if (get('action')) {
 @$db->exec("INSERT INTO device_summary(device_id, device_name) VALUES ('$id', 'unknown')");
 
 
+	if (!isset($_GET['type'])) {
+		$type='I';
+	}else{
+		$type = strtoupper(get('type'));
+	}
 
 
 	if($action=='update'){
 		$power = get('power');
+		$last_power = get('last_power', true);
+
 		$power_query = $db->query("SELECT COUNT(*) as count FROM device_summary WHERE device_id='$id'");
 
 		if($power_query->fetchArray(SQLITE3_ASSOC)['count']==1){
@@ -72,10 +85,10 @@ if (get('action')) {
 			$sql = $db->exec("UPDATE device_summary SET power='$power' WHERE device_id='$id'");
 		}
 
-		$check_history_date = date("Y-m-d");
+		$check_graph_date = date("Y-m-d");
 		$curr_hour = date('H');
 
-		$last_power_q = $db->query("SELECT last_power, day, `24hr_log` FROM device_power_history WHERE device_id='$id' ORDER BY id DESC LIMIT 0,1");
+		$last_power_q = $db->query("SELECT last_power, day, `24hr_log` FROM device_power_graph WHERE device_id='$id' ORDER BY day DESC LIMIT 0,1");
 		if ($last_power = $last_power_q->fetchArray(SQLITE3_ASSOC)) {
 			$power_diff = $power - $total_power;
 			if ($power_diff<0) {
@@ -85,13 +98,13 @@ if (get('action')) {
 			$power_diff = $power;
 		}
 
-		if ($last_power['day']!==$check_history_date) {
+		if ($last_power['day']!==$check_graph_date) {
 			$summ_array = array($curr_hour=>$power_diff);
 			$ser_summ_array = serialize($summ_array);
-			$db->exec("INSERT INTO device_power_history(day, last_power, device_id, `24hr_log`) VALUES ('$check_history_date','$power_diff', '$id', '$ser_summ_array')");
+			$db->exec("INSERT INTO device_power_graph(day, last_power, device_id, `24hr_log`) VALUES ('$check_graph_date','$power_diff', '$id', '$ser_summ_array')");
 		}else{
 
-			if ($last_power['day']==$check_history_date) {
+			if ($last_power['day']==$check_graph_date) {
 				$summ_array = unserialize($last_power['24hr_log']);
 				@$summ_array[$curr_hour]+=$power_diff;
 			}else{
@@ -100,7 +113,7 @@ if (get('action')) {
 
 			$ser_summ_array = serialize($summ_array);
 
-			$db->exec("UPDATE device_power_history SET last_power=last_power+$power_diff, `24hr_log`='$ser_summ_array' WHERE day='$check_history_date' AND device_id='$id'");
+			$db->exec("UPDATE device_power_graph SET last_power=last_power+$power_diff, `24hr_log`='$ser_summ_array' WHERE day='$check_graph_date' AND device_id='$id'");
 
 
 			}
@@ -134,3 +147,6 @@ if ($off_query->fetchArray(SQLITE3_ASSOC)['count']==0) {
 
 
 }
+
+$db->close();
+unset($db);

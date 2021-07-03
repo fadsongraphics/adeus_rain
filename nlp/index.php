@@ -64,7 +64,7 @@ if (get('key')) {
 
 			if (@$device_id=$db->query("SELECT device_id FROM device_summary WHERE device_name='$device'")->fetchArray(SQLITE3_ASSOC)['device_id']) {
 
-				$sql = "SELECT SUM(last_power) FROM device_power_history WHERE day>'".date('Y-m-d', strtotime($period))."' AND device_id='$device_id'";
+				$sql = "SELECT SUM(last_power) FROM device_power_graph WHERE day>'".date('Y-m-d', strtotime($period))."' AND device_id='$device_id'";
 				
 				$energy = $db->query($sql)->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'];
 
@@ -76,7 +76,7 @@ if (get('key')) {
 			}
 
 		}else{
-			$sql = "SELECT SUM(last_power) FROM device_power_history WHERE day>'".date('Y-m-d', strtotime($period))."'";
+			$sql = "SELECT SUM(last_power) FROM device_power_graph WHERE day>'".date('Y-m-d', strtotime($period))."'";
 
 				$energy = $db->query($sql)->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'];
 

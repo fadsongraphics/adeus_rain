@@ -4,33 +4,49 @@ require_once "conn.php";
 
 	$time = time();
 
-if(post('tts')){
-	
-	$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
+if ($update_page=post('update_page')) {
 
-	if(@$nlp_q = file_get_contents("/var/www/html/python/nlp_q.txt")){
-		$nlp_r = file_get_contents("/var/www/html/python/nlp_r.txt");
+	if($update_page=='dongle_view'){
+		
+		$time_view = date('h:i')." <span style='font-weight:lighter'>".date("A")."</span>";
+		$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
 
-		$nlp_array = array(
-			"trigger"=>$trigger,
-			"nlp_q"=>$nlp_q,
-			"nlp_r"=>$nlp_r
-		);
+		if(@$nlp_q = file_get_contents("/var/www/html/python/nlp_q.txt")){
+			$nlp_r = file_get_contents("/var/www/html/python/nlp_r.txt");
 
-	}else{
-		$nlp_array = array(
-			"trigger"=>'false',
-			"nlp_q"=>'',
-			"nlp_r"=>''
-		);
+			$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
+
+			$meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta='meter_power_O'"))->fetchArray(SQLITE3_ASSOC)['value'], 2);
+			$devices = $db->query("SELECT COUNT(*) AS count FROM device_active WHERE off_time>$active_time")->fetchArray()['count'].'/'.$db->query("SELECT COUNT(*) AS count FROM device_summary")->fetchArray()['count'];
+
+			$nlp_array = array(
+				"trigger"=>$trigger,
+				"nlp_q"=>$nlp_q,
+				"nlp_r"=>$nlp_r,
+				"device_energy"=>$total_energy_consumed,
+				"meter"=>$meter_power,
+				"devices"=>$devices,
+				"time"=> $time_view
+			);
+
+		}else{
+			$nlp_array = array(
+				"trigger"=>'false',
+				"nlp_q"=>'',
+				"nlp_r"=>'',
+				"device_energy"=>'0.0Wh',
+				"meter"=>'0.00Wh',
+				'devices'=>'0/0',
+				"time"=> $time_view,
+			);
+		}
+			echo json_encode($nlp_array);
 	}
-		echo json_encode($nlp_array);
+
 }
 
 
-
 if (post('add_device')) {
-	print_r($_POST);
 	$add_device_id = $_POST['socket_id'];
 	$device_name = $_POST['device_name'];
 
@@ -97,7 +113,7 @@ if(post('energy_graph')){
 	}
 
 
-	$sql = "SELECT SUM(last_power) FROM device_power_history".$where;
+	$sql = "SELECT SUM(last_power) FROM device_power_graph".$where;
 
 	$energy = energy_format($db->query($sql)->fetchArray(SQLITE3_ASSOC)['SUM(last_power)']);
 
@@ -128,7 +144,7 @@ if(post('device_graph')){
 
 	$dev_summ = $db->query("SELECT * FROM device_summary WHERE device_id='$id'")->fetchArray(SQLITE3_ASSOC);
 
-	$dev_pow_q =  $db->query("SELECT * FROM device_power_history WHERE device_id='$id' AND day>'$lower_limit_text' ORDER BY day DESC");
+	$dev_pow_q =  $db->query("SELECT * FROM device_power_graph WHERE device_id='$id' AND day>'$lower_limit_text' ORDER BY day DESC");
 	$dev_pow=array();
 
 	$graph = array();

@@ -6,12 +6,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 
-// if (@file_get_contents("../../pi")) {
-// 	$conn = new mysqli('localhost', 'admin', 'your_password', 'adeus_dongle');
-// }else{
-// 	$conn = new mysqli('localhost', 'root', '', 'adeus');
-// }
-
 require_once "db.php";
 
 $source = 'grid';
@@ -77,6 +71,11 @@ function energy_format($e, $b=2, $showUnit=true){
 	return $txt;
 }
 
+
+// VARIABLES
+
+$server_url = "http://localhost/adeus_server/";
+// $server_url = "https://rainprojects.dev";
 
 
 $styles = array(
