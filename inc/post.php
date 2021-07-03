@@ -10,9 +10,9 @@ if ($update_page=post('update_page')) {
 		
 		$time_view = date('h:i')." <span style='font-weight:lighter'>".date("A")."</span>";
 		$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
-		
-		if(@$nlp_q = file_get_contents("python/nlp_q.txt")){
-			$nlp_r = file_get_contents("python/nlp_r.txt");
+
+		if(@$nlp_q = file_get_contents("/var/www/html/python/nlp_q.txt")){
+			$nlp_r = file_get_contents("/var/www/html/python/nlp_r.txt");
 
 			$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
 
