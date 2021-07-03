@@ -42,8 +42,12 @@ if (get('update')) {
 			die("Could not retrieve files");
 		}
 	}else{
+<<<<<<< HEAD
 		  echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
 		die("Could not reset git <br> Reloading page...");
+=======
+		die("Could not reset git");
+>>>>>>> 10416eb4536eca057f3245e09aa5b71b92dc2f04
 	}
 }
 
@@ -70,7 +74,11 @@ if (get('update')) {
  		background: url('assets/images/dongle_view_bg.png') center no-repeat;
  		background-size: cover;
 		background-attachment:fixed;
+<<<<<<< HEAD
 		overflow: hidden;
+=======
+		transform: scale(0.95);
+>>>>>>> 10416eb4536eca057f3245e09aa5b71b92dc2f04
  	}
  	a{
  		text-decoration: none;
@@ -91,7 +99,11 @@ if (get('update')) {
 
  	.bg-circle{
  		font-weight: 600;
+<<<<<<< HEAD
  		font-size: 1.8em !important;
+=======
+ 		font-size: 2em !important;
+>>>>>>> 10416eb4536eca057f3245e09aa5b71b92dc2f04
 		background:#fff;
 		color: #000;
 		font-weight: bolder;
@@ -102,7 +114,11 @@ if (get('update')) {
  	}
 
 	.title{
+<<<<<<< HEAD
 		font-size: 1em !important;
+=======
+		font-size: 1.1em !important;
+>>>>>>> 10416eb4536eca057f3245e09aa5b71b92dc2f04
 		color: black;
 		text-align: center;
 		font-weight: 500;
