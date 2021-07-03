@@ -330,6 +330,7 @@ if (get('update')) {
 						document.getElementById('chatbx').innerHTML = "\"Say Hello Vivien\"";
 					}
 					if(trigger=='true'){
+						console.log('dfdfd');
 						$('#greyness').fadeIn();
 						document.getElementById('chatbx').innerHTML = "<i>Listening...</i>";
 					}
