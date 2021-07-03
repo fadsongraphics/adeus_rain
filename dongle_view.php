@@ -30,17 +30,11 @@ if (get('update')) {
 		if(exec("sudo git pull")){
 		echo ("Running bash script...<br>");
 
-			if(exec("sudo installer/update.sh")){
-			echo ("Successfull. Rebooting in 5 seconds...<br>");
-			file_put_contents('installer/update.sh', ' ');
+			exec("sudo installer/update.sh");
 
-			  echo "<meta http-equiv='refresh'  content='5,url=http://localhost/dongle_view.php?restart=1'>";
-			  exit();
+			// echo "<meta http-equiv='refresh'  content='5,url=http://localhost/dongle_view.php?restart=1'>";
+			// exit();
 
-			}else{
-				echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
-				die("Could not install");
-			}
 		}else{
 			echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
 			die("Could not retrieve files");
