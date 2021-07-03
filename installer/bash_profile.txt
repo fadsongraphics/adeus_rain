@@ -2,8 +2,7 @@ sudo chmod a+w -R /var/www
 sudo chmod a+x -R /var/www
 sudo chmod a+x /var/www/html/installer/update.sh
 
-sudo /var/www/html/installer/update.sh
-sudo rm /var/www/html/installer/update.sh
+sudo source /var/www/html/installer/update.sh
 
 sudo wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant.conf -iwlan0 -Dnl80211,wext
 

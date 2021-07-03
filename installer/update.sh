@@ -1,3 +1,2 @@
 #!/bin/sh
 echo "COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-touch "a.txt"
