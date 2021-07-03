@@ -38,12 +38,12 @@ if (get('update')) {
 			  exit();
 
 			}else{
-				die("Could not install");
 				echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
+				die("Could not install");
 			}
 		}else{
-			die("Could not retrieve files");
 			echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
+			die("Could not retrieve files");
 		}
 	}else{
 		  echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
