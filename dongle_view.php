@@ -31,8 +31,8 @@ if (get('update')) {
 
 			echo ("Successfull. Rebooting in 5 seconds...<br>");
 
-			echo "<meta http-equiv='refresh'  content='5,url=http://localhost/dongle_view.php?restart=1'>";
-			  exit();
+			echo "<meta http-equiv='refresh'  content='5,url=?restart=1'>";
+			exit();
 
 		}else{
 			echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
