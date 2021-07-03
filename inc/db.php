@@ -1,7 +1,7 @@
 <?php
 
-if (file_exists("/var/www/html/inc/adeus.db")) {
-  $db_loc='/var/www/html/inc/adeus.db';
+if (file_exists("/var/www/adeus.db")) {
+  $db_loc='/var/www/adeus.db';
 }else{
   $db_loc='C:/xampp/htdocs/hub/inc/adeus.db';
 }

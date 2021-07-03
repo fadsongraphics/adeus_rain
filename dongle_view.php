@@ -37,9 +37,13 @@ if (get('update')) {
 			  echo "<meta http-equiv='refresh'  content='5;url=http://localhost/dongle_view.php?restart=1'>";
 			  exit();
 
+			}else{
+				die("Could not install");
+				echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
 			}
 		}else{
 			die("Could not retrieve files");
+			echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
 		}
 	}else{
 		  echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";

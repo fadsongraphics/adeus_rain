@@ -1,5 +1,5 @@
-sudo chmod a+w -R /var/www/html
-sudo chmod a+x -R /var/www/html
+sudo chmod a+w -R /var/www
+sudo chmod a+x -R /var/www
 
 sudo wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant.conf -iwlan0 -Dnl80211,wext
 
