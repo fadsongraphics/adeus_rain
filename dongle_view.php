@@ -34,7 +34,7 @@ if (get('update')) {
 			echo ("Successfull. Rebooting in 5 seconds...<br>");
 			file_put_contents('installer/update.sh', ' ');
 
-			  echo "<meta http-equiv='refresh'  content='5;url=http://localhost/dongle_view.php?restart=1'>";
+			  echo "<meta http-equiv='refresh'  content='5,url=http://localhost/dongle_view.php?restart=1'>";
 			  exit();
 
 			}else{
