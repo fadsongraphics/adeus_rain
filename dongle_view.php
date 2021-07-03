@@ -28,19 +28,12 @@ if (get('update')) {
 	if(exec("sudo git reset --hard")){
 
 		if(exec("sudo git pull")){
-		echo ("Running bash script...<br>");
-		exec("sudo chmod a+x /var/www/html/installer/update.sh");
 
-			if(exec("sudo installer/update.sh")){
 			echo ("Successfull. Rebooting in 5 seconds...<br>");
 
-			  echo "<meta http-equiv='refresh'  content='5,url=http://localhost/dongle_view.php?restart=1'>";
+			echo "<meta http-equiv='refresh'  content='5,url=http://localhost/dongle_view.php?restart=1'>";
 			  exit();
 
-			}else{
-				echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
-				die("Could not install");
-			}
 		}else{
 			echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
 			die("Could not retrieve files");
