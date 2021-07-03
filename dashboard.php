@@ -3,8 +3,8 @@
 require_once "inc/session.php";
 require_once "inc/conn.php";
 
-$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_history"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
-$meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta='meter_power'"))->fetchArray(SQLITE3_ASSOC)['value'], 2);
+$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
+$meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta='meter_power_O'"))->fetchArray(SQLITE3_ASSOC)['value'], 2);
 ?>
 
 		<div class="row">
@@ -71,7 +71,8 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 
     		                </small>
 
-        		            <h6 style="font-weight: 900" class="mb-0"><img src="assets/svgs/energy1.svg" style="width: 20px; height: 20px;"/> -- kWh</h6>
+        		            <h6 style="font-weight: 900" class="mb-0"><img src="assets/svgs/energy1.svg" style="width: 20px; height: 20px;"/> <?php echo $meter_power; ?>
+	        		        </h6>
 
         		            <small style="font-size: 10px">Total Energy Generated</small>
 
@@ -131,7 +132,7 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 
         					            <div style="width: 15px; height: 15px; background-color: #02bc47; display: inline-block; border-radius: 5px"></div>
 
-        					            Total Energy
+        					            Energy Generated
 
         					        </span>
 
@@ -189,7 +190,7 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 		                    <div class="pos-left-center p-3">
 		                        <h3 style="font-weight: 900;"><?php echo $meter_power;?></h3>
 
-		                        <p>Total<br/>Energy</p>
+		                        <p>Energy<br/>Generated</p>
 		                    </div>
 
 		                    <div style="background-color: #dadee6; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
@@ -406,7 +407,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: [
 		<?php 
 		$day_30 = date("Y-m-d", strtotime("30 days ago"));
-		$all_energy=$db->query("SELECT * FROM device_power_history WHERE day>'$day_30'");
+		$all_energy=$db->query("SELECT * FROM device_power_graph WHERE day>'$day_30'");
 		while($x2 = $all_energy->fetchArray(SQLITE3_ASSOC)){
 			@$all_energies[$x2['day']]+=$x2['last_power'];
 		}
@@ -426,7 +427,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: [
 		<?php 
 		$day_30 = date("Y-m-d", strtotime("30 days ago"));
-		$all_energy2=$db->query("SELECT * FROM meter_power_history WHERE day>'$day_30'");
+		$all_energy2=$db->query("SELECT * FROM meter_power_graph WHERE meter='O' AND day>'$day_30'");
 		while($x3 = $all_energy2->fetchArray(SQLITE3_ASSOC)){
 			@$all_energies2[$x3['day']]+=$x3['last_power'];
 		}
@@ -448,3 +449,9 @@ chart.render();
 
 });
 </script>
+
+
+<?php 
+$db->close();
+unset($db);
+ ?>

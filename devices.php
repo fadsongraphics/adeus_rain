@@ -4,7 +4,7 @@ require_once "inc/session.php";
 require_once "inc/conn.php";
 
 $today = date('Y-m-d');
-$energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_history"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
+$energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
 
 ?>
 
@@ -616,3 +616,8 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
         })
     }
 </script>
+
+<?php 
+$db->close();
+unset($db);
+ ?>
