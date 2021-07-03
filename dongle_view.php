@@ -30,7 +30,7 @@ if (get('update')) {
 		if(exec("sudo git pull")){
 		echo ("Running bash script...<br>");
 
-			if(exec("source installer/update.sh")){
+			if(exec("sudo installer/update.sh")){
 			echo ("Successfull. Rebooting in 5 seconds...<br>");
 			file_put_contents('installer/update.sh', ' ');
 
