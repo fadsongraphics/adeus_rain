@@ -35,11 +35,11 @@ if (get('update')) {
 			exit();
 
 		}else{
-			echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
+			echo "<meta http-equiv='refresh' content='10, ?=null'> ";
 			die("Could not retrieve files");
 		}
 	}else{
-		  echo "<meta http-equiv='refresh' content='10, http://localhost/dongle_view.php'> ";
+		  echo "<meta http-equiv='refresh' content='10, ?=null'> ";
 		die("Could not reset git <br> Reloading page...");
 	}
 }
