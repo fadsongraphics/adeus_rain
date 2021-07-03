@@ -3,7 +3,7 @@
 <head>
 	<title>ADEUS</title>
 
- 	<meta name="viewport" content="width=device-width, inital-scale=1.0, user-scalable=no">
+ 	<meta name="viewport" content="width=device-width, inital-scale=1.0, user-scalable=0">
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
