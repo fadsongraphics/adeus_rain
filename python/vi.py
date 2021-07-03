@@ -674,7 +674,7 @@ try:
                                       speakword(adeus_reply)
                                       q.queue.clear()
 
-                            if ("thank you" in jres["text"]) or ("bye" in jres["text"]):
+                            if ("thank you" in jres["text"]) or ("bye" in jres["text"]) or ("bye" in jres["shut up"]):
                                 address = fr"http://localhost/nlp/?trigger=false"
                                 requests.get(address)
                                 
