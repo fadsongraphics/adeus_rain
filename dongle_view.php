@@ -58,7 +58,7 @@ if (get('update')) {
  <html>
  <head>
 
- 	<meta name="viewport" content="width=device-width, inital-scale=1.0">
+ 	<meta name="viewport" content="width=device-width, inital-scale=1.0, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
 	<script src="assets/js/jquery-3.6.0.min.js"></script>
 
