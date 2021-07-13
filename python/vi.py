@@ -10,16 +10,46 @@ import pyttsx3
 import wordtodigits
 import pandas as pd
 import numpy as np
+import math
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import requests
 import re
 ##import simpleaudio as sa
-from datetime import date
+from datetime import datetime
 import time
 import pygame
 
 pygame.mixer.init()
+
+
+soundObjnegative = pygame.mixer.Sound('negativea.wav')
+soundObjhundred = pygame.mixer.Sound ('hundreda.wav')
+soundObjmillion = pygame.mixer.Sound('milliona.wav')
+soundObjthousand = pygame.mixer.Sound('thousanda.wav')
+soundObjbillion = pygame.mixer.Sound('billiona.wav')
+soundObjand = pygame.mixer.Sound('&a.wav')
+soundObj1a = pygame.mixer.Sound('1a.wav')
+soundObj2a = pygame.mixer.Sound('2a.wav')
+soundObj3a = pygame.mixer.Sound('3a.wav')
+soundObj4a = pygame.mixer.Sound('4a.wav')
+soundObj5a = pygame.mixer.Sound('5a.wav')
+soundObj6a = pygame.mixer.Sound('6a.wav')
+soundObj7a = pygame.mixer.Sound('7a.wav')
+soundObj8a = pygame.mixer.Sound('8a.wav')
+soundObj9a = pygame.mixer.Sound('9a.wav')
+soundObj10a = pygame.mixer.Sound('10a.wav')
+soundObj11a = pygame.mixer.Sound('11a.wav')
+soundObj12a = pygame.mixer.Sound('12a.wav')
+soundObj13a = pygame.mixer.Sound('13a.wav')
+soundObj14a = pygame.mixer.Sound('14a.wav')
+soundObj15a = pygame.mixer.Sound('15a.wav')
+soundObj16a = pygame.mixer.Sound('16a.wav')
+soundObj17a = pygame.mixer.Sound('17a.wav')
+soundObj18a = pygame.mixer.Sound('18a.wav')
+soundObj19a = pygame.mixer.Sound('19a.wav')
+soundObj20a = pygame.mixer.Sound('20a.wav')
+soundObjpoint = pygame.mixer.Sound('pointa.wav')
 soundObj = pygame.mixer.Sound('Beginning.wav')
 soundObj1 = pygame.mixer.Sound('1.wav')
 soundObj2 = pygame.mixer.Sound('2.wav')
@@ -80,7 +110,7 @@ times = ['today', 'yesterday', 'last week', 'last month', 'a month ago', 'two da
 quantity = []
 currency = []
 period= []
-today = date.today()
+today = datetime.now()
 
 def get_intent(text):
   global device, quantity, currency, period
@@ -123,7 +153,7 @@ def intent2action(intent):
       for d in device:
         
         
-        address= fr"http://localhost/nlp/?key=passkey&device={d}&get_state=1"
+        address= fr"http://localhost/nlp?key=passkey&device={d}&get_state=1"
         address = address.replace(' ', '%20')
         web_res  = requests.get(address).json() 
         response =  web_res['response']
@@ -147,7 +177,7 @@ def intent2action(intent):
 
     if device and period:
       for d in device:
-        address = fr"http://localhost/nlp/?key=passkey&device={d}&get_energy=1&period={period}"
+        address = fr"http://localhost/nlp?key=passkey&device={d}&get_energy=1&period={period}"
         address = address.replace(' ', '%20')
         
         web_res = requests.get(address).json()
@@ -166,15 +196,16 @@ def intent2action(intent):
         soundObj24.play()
         time.sleep(2)
 
-        text += f'.{usage}.'
+        #text += f'.{usage}.'
+        sayeed (usage)
+        time.sleep(2)
 
         soundObj25.play()
         time.sleep(2)
 
 
-
     elif device:
-      address = fr"http://localhost/nlp/?key=passkey&device={d}&get_energy=1&period=today"
+      address = fr"http://localhost/nlp?key=passkey&device={d}&get_energy=1&period=today"
       address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       usage = web_res['response']
@@ -182,7 +213,9 @@ def intent2action(intent):
       soundObj39.play()
       time.sleep(2)
 
-      text += f'.{usage}.'
+      #text += f'.{usage}.'
+      sayeed (usage)
+      time.sleep(2)
 
     else:
       soundObj1.play()
@@ -192,7 +225,7 @@ def intent2action(intent):
   elif intent == 'Turn_off_device':
     if device:
       for d in device:
-        address = fr"http://localhost/nlp/?key=passkey&device={d}&turn_off=1"
+        address = fr"http://localhost/nlp?key=passkey&device={d}&turn_off=1"
         address = address.replace(' ', '%20')
         web_res = requests.post(address).json()
 
@@ -208,7 +241,7 @@ def intent2action(intent):
   elif intent == 'Turn_on_device':
     if device:
       for d in device:
-        address = fr"http://localhost/nlp/?key=passkey&device={d}&turn_on=1"
+        address = fr"http://localhost/nlp?key=passkey&device={d}&turn_on=1"
         address = address.replace(' ', '%20')
         web_res= requests.post(address).json()
 
@@ -221,7 +254,7 @@ def intent2action(intent):
       time.sleep(2)
 
   elif intent == 'Utilities_Energy_Balance':
-      address = fr"http://localhost/nlp/?key=passkey&get_balance=1"
+      address = fr"http://localhost/nlp?key=passkey&get_balance=1"
       address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       balance = web_res['response']
@@ -229,13 +262,17 @@ def intent2action(intent):
       soundObj28.play()
       time.sleep(2)
 
-      text += f'.{balance}.'
+      
+      #print(balance)
+      #print(balance*2)
+      sayeed (float(balance))
+      time.sleep(2)
 
       soundObj25.play()
       time.sleep(2)
 
   elif intent == 'Utilities_energy_price':
-      address = fr"http://localhost/nlp/?key=passkey&get_price=1"
+      address = fr"http://localhost/nlp?key=passkey&get_price=1"
       address = address.replace(' ', '%20')
       web_res= requests.get(address).json()
       price = web_res['response'] 
@@ -298,8 +335,8 @@ def intent2action(intent):
 
   elif intent == 'Utilities_View_Usage':
     if period:
-      address = fr"http://localhost/nlp/?key=passkey&get_energy=1&period={period}"
-      address = address = address.replace(' ', '%20')
+      address = fr"http://localhost/nlp?key=passkey&get_energy=1&period={period}"
+      address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       usage = web_res['response']
 
@@ -313,15 +350,16 @@ def intent2action(intent):
       soundObj24.play()
       time.sleep(2)
      
-
-      text += f'{usage}'
+      #text += f'{usage}'
+      sayeed (usage)
+      time.sleep(2)
 
       
 
 
 
     else:
-      address = fr"http://localhost/nlp/?key=passkey&get_energy=1&period=today"
+      address = fr"http://localhost/nlp?key=passkey&get_energy=1&period=today"
       address = address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       usage = web_res['response']
@@ -330,7 +368,9 @@ def intent2action(intent):
       time.sleep(2)
 
     
-      text += f"{usage}"
+      #text += f"{usage}"
+      sayeed (usage)
+      time.sleep(2)
 
   # elif intent == 'Age':
   #   filename = '5.wav'
@@ -344,52 +384,71 @@ def intent2action(intent):
     soundObj6.play()
     time.sleep(2)
     t="Sure how can I be of help?"
+    not_done_with_Q= False
+    soundObja.play()
 
   elif intent == 'Bored':
     soundObj7.play()
     time.sleep(2)
     t="So sorry about that"
+    not_done_with_Q= False
+    soundObja.play()
 
   elif intent == 'Love':
     soundObj8.play()
     time.sleep(5)
     t="I'm happy being single. the upside is I get to focus on managing your Energy"
+    not_done_with_Q= False
+    soundObja.play()
 
 
   elif intent == 'Compliment':
     soundObj9.play()
     time.sleep(2)
     t="Oh!, thank you. i'm blushing right now!."
+    not_done_with_Q= False
+    soundObja.play()
 
   
   elif intent == 'Hobby':
     soundObj10.play()
     time.sleep(2)
     t="I love to help you manage your energy"
+    stoplistening ()
+    not_done_with_Q= False
+    soundObja.play()
 
 
   elif intent == 'get_personal':
     soundObj11.play()
     time.sleep(2)
     t="I,m your energy concierge!"
+    not_done_with_Q= False
+    soundObja.play()
 
 
   elif intent == 'Pissed':
     soundObj12.play()
     time.sleep(5)
     t="sorry!, boss!!"
+    not_done_with_Q= False
+    soundObja.play()
 
 
   elif intent == 'Language':
     soundObj13.play()
     time.sleep(5)
     t="I speak English. Visit your language settings to change"
+    not_done_with_Q= False
+    soundObja.play()
 
 
   elif intent == 'Boss':
     soundObj14.play()
     time.sleep(2)
     t="I was made by Robotics & Artificial Intelligence Nigeria."
+    not_done_with_Q= False
+    soundObja.play()
     
 
 
@@ -397,6 +456,8 @@ def intent2action(intent):
     soundObj15.play()
     time.sleep(2)
     t="I learn everyday!"
+    not_done_with_Q= False
+    soundObja.play()
 
 
 
@@ -404,23 +465,31 @@ def intent2action(intent):
     soundObj16.play()
     time.sleep(2)
     t="I'm always happy to help!"
+    not_done_with_Q= False
+    soundObja.play()
 
 
   #elif intent == 'know_weather':
     #text+= f"The weather today is..." #get from db
 
   elif intent == 'know_date':
-    d2 = today.strftime("%B %d, %Y")
+    # d2 = today.strftime("%B %d, %Y")
 
-    soundObj38.play()
-    time.sleep(2)
+    # soundObj38.play()
+    # time.sleep(2)
     
-    text+= f".{d2}" 
+    # text+= f"{d2}" 
+    stephen ()
+    time.sleep(23)
+    not_done_with_Q= False
+    soundObja.play()
 
   elif intent == 'End_conversation':
     soundObj17.play()
     time.sleep(2)
     t="I'm happy I was able to help"
+    not_done_with_Q= False
+    soundObja.play()
 
     
   elif intent == 'Ask_question':
@@ -428,6 +497,8 @@ def intent2action(intent):
     soundObj18.play()
     time.sleep(2)
     t="Sure how can I help?"
+    not_done_with_Q= False
+    soundObja.play()
 
     
   elif intent == 'greeting':
@@ -435,28 +506,46 @@ def intent2action(intent):
     soundObj19.play()
     time.sleep(2)
     t="Hey! How may I be of assistance?"
+    not_done_with_Q= False
+    soundObja.play()
 
       
   elif intent == 'Utilities_Report_Outage':
     soundObjb.play()
     time.sleep(7)
     t="Our team will respond, to your request! as soon as possible."
+    not_done_with_Q= False
+    soundObja.play()
 
       
   elif intent == 'Utilities_Start_Service':
     soundObjb.play()
     time.sleep(7)
     t="Our team will respond, to your request! as soon as possible."
+    not_done_with_Q= False
+    soundObja.play()
       
   elif intent == 'Utilities_Stop_Service':
     soundObjb.play()
     time.sleep(7)
     t="Our team will respond, to your request! as soon as possible."
+    not_done_with_Q= False
+    soundObja.play()
+
+  elif intent == 'Nigeria':
+    text += f'I was built by rain in Nigeria'
+    not_done_with_Q= False
+    soundObja.play()
+
       
   else:
 
     soundObjb.play()
-    time.sleep(2)
+    time.sleep(2) 
+    not_done_with_Q= False
+    
+
+  
 
 
   return text
@@ -473,9 +562,274 @@ def speakword(text):
     engine.setProperty('rate', 140)
     engine.say(text)
     engine.runAndWait()
-    
-    
+
 q = queue.Queue()
+
+def stoplistening ():
+
+  not_done_with_Q= False
+
+
+def sayeed (num):
+    td=0.5
+
+    if num < 0:
+        soundObjnegative.play()
+        time.sleep (td)
+
+    x = abs(num)
+
+    if x >= 1000000000:
+        n = math.floor(x/1000000000)
+        a=  str(n) + '.wav' 
+        pygame.mixer.init()
+        pygame.mixer.Sound(a).play()
+        sayeed (n)
+        time.sleep (td)
+        soundObjbillion.play()
+        time.sleep (td)
+
+        x = x-(n*1000000000)
+        # while True :
+        #     if b!=0:
+        #         sayeed (b)
+        #     else:
+        #         break
+        
+
+
+    if x >= 1000000:
+        n = math.floor(x/1000000)
+        a=  str(n) + 'a.wav' 
+        pygame.mixer.init()
+        pygame.mixer.Sound(a).play()
+        sayeed (n)
+        time.sleep (td)
+        soundObjmillion.play()
+        time.sleep (td)
+
+        x = x-(n*1000000)
+        # while True :
+        #     if b!=0:
+        #         sayeed (b)
+        #     else:
+        #         break
+
+    if x >= 1000:
+        n = math.floor(x/1000)
+        a=  str(n) + 'a.wav' 
+        pygame.mixer.init()
+        pygame.mixer.Sound(a).play()
+        sayeed (n)
+        time.sleep (td)
+        soundObjthousand.play()
+        time.sleep (td)
+
+        x = x-(n*1000)
+        # while True :
+        #     if b!=0:
+        #         sayeed (b)
+        #     else:
+        #         break
+    
+    
+    if x >= 100:
+        n = math.floor(x/100)
+        a=  str(n) + 'a.wav' 
+        pygame.mixer.init()
+        pygame.mixer.Sound(a).play()
+        time.sleep (td)
+        soundObjhundred.play()
+        time.sleep (td)
+        x = x-(n*100)
+        time.sleep (td)
+        if x > 0:
+            soundObjand.play()
+            time.sleep (td)
+
+        
+        # while True :
+        #     if b!=0:
+        #         sayeed (b)
+        #     else:
+        #         break
+
+    
+
+    if x >= 20:
+        n = math.floor(x/10)
+        a=  str(10*n) + 'a.wav' 
+        pygame.mixer.init()
+        pygame.mixer.Sound(a).play()
+        time.sleep (td)
+        x = x-(10*n)
+        # while True :
+        #     if b!=0:
+        #         sayeed (b)
+        #     else:
+        #         break
+
+    if x >= 1:
+        n = math.floor(x)
+        x = round(x-n,3)
+
+        if n == 19:
+            soundObj19a.play()
+            time.sleep (td)
+
+        if n == 18:
+            soundObj18a.play()
+            time.sleep (td)
+
+        if n == 17:
+            soundObj17a.play()
+            time.sleep (td)
+
+        if n == 16:
+            soundObj16a.play()
+            time.sleep (td)
+        
+        if n == 15:
+            soundObj15a.play()
+            time.sleep (td)
+
+        if n == 14:
+            soundObj14a.play()
+            time.sleep (td)
+
+        if n == 13:
+            soundObj13a.play()
+            time.sleep (td)
+
+        if n == 12:
+            soundObj12a.play()
+            time.sleep (td)
+
+        if n == 11:
+            soundObj11a.play()
+            time.sleep (td)
+
+        if n == 10:
+            soundObj10a.play()
+            time.sleep (td)
+
+        if n == 9:
+            soundObj9a.play()
+            time.sleep (td)
+
+        if n == 8:
+            soundObj8a.play()
+            time.sleep (td)
+
+        if n == 7:
+            soundObj7a.play()
+            time.sleep (td)
+
+        if n == 6:
+            soundObj6a.play()
+            time.sleep (td)
+
+        if n == 5:
+            soundObj5a.play()
+            time.sleep (td)
+
+        if n == 4:
+            soundObj4a.play()
+            time.sleep (td)
+
+        if n == 3:
+            soundObj3a.play()
+            time.sleep (td)
+
+        if n == 2:
+            soundObj2a.play()
+            time.sleep (td)
+
+        if n == 1:
+            soundObj1a.play()
+            time.sleep (td)
+        
+
+    if x > 0:
+        soundObjpoint.play()
+        time.sleep (td)
+        n = math.floor(x/0.1)
+        a=  str(n) + 'a.wav' 
+        pygame.mixer.init()
+        pygame.mixer.Sound(a).play()
+        time.sleep (td)
+        x = x - (n*0.1)
+        
+        if x > 0:
+            n = math.floor(x/0.01)
+            a=  str(n) + 'a.wav' 
+            pygame.mixer.init()
+            pygame.mixer.Sound(a).play()
+            time.sleep (td)
+            x = x - (n*0.01)
+
+            if x > 0:
+                n = math.floor(x/0.001)
+                a=  str(n) + 'a.wav' 
+                pygame.mixer.init()
+                pygame.mixer.Sound(a).play()
+                time.sleep (td)
+                x = x - (n*0.001)
+
+def stephen ():
+    
+
+    d2 = today.strftime("%B")
+    d7 = today.strftime("%A")
+   
+    d3 = int(today.strftime("%d"))
+    d4 = int(today.strftime("%Y"))
+    d5 = int(today.strftime("%H"))
+
+    if d5 > 11:
+        ampm ='pm'
+    else:
+        ampm = 'am'
+    
+    if d5 > 12:
+        d5=d5-12
+
+    if d5 ==0:
+        d5 = 12
+    
+    
+    d6 = int (today.strftime('%M'))
+
+    d4a = math.floor(d4/100)
+    d4b = d4-(d4a*100)
+    pygame.mixer.init()
+#this says the time
+
+    sayeed (d5)
+    time.sleep (0.5)
+    sayeed (d6)
+    time.sleep (0.5)
+    pygame.mixer.Sound(ampm + 'a.wav').play()
+    time.sleep (2)
+
+    pygame.mixer.init()
+    pygame.mixer.Sound(d7 + 'a.wav').play()
+    time.sleep (1)
+
+
+
+#this says the date
+    pygame.mixer.init()
+    pygame.mixer.Sound(d2 + 'a.wav').play()
+    time.sleep (1)
+
+    sayeed (d3)
+    time.sleep (1)
+    sayeed (d4a)
+    time.sleep (0.2)
+    sayeed (d4b)
+    time.sleep (0.2)   
+    
 
 def int_or_str(text):
     """Helper function for argument parsing."""
@@ -489,7 +843,7 @@ def callback(indata, frames, time, status):
     if status:
         print(status, file=sys.stderr)
     q.put(bytes(indata))
-    
+
     
 parser = argparse.ArgumentParser(add_help=False)
 parser.add_argument(
@@ -549,7 +903,7 @@ try:
                     print (jres['text']) 
                     
                     if ("hello vivian" in jres["text"]) or ("hello" in jres["text"]) or ("vivian" in jres["text"]):
-                        address = fr"http://localhost/nlp/?trigger=true"
+                        address = fr"http://localhost/nlp?trigger=true"
                         requests.get(address)
                         
                         # filename = 'Beginning.wav'
@@ -593,6 +947,8 @@ try:
                                   f2 = open("nlp_r.txt","w")
                                   f2.write(adeus_reply)
                                   f2.close()
+
+                                  
 
                                   if adeus_reply.startswith('Which device do you'):
                                       
@@ -673,9 +1029,18 @@ try:
                                   else:
                                       speakword(adeus_reply)
                                       q.queue.clear()
+                                      #address = fr"http://localhost/nlp?trigger=false"
+                                      #requests.get(address)
+                                
+                                      
+                                      #filename = 'bbm_tone.wav'
+                                      #data, fs = sf.read(filename, dtype='float32')
+                                      # sd.play(data, fs)
+                                      #status = sd.wait()
+                                      
 
-                            if ("thank you" in jres["text"]) or ("bye" in jres["text"]) or ("bye" in jres["shut up"]):
-                                address = fr"http://localhost/nlp/?trigger=false"
+                            if ("thank you" in jres["text"]) or ("bye" in jres["text"]):
+                                address = fr"http://localhost/nlp?trigger=false"
                                 requests.get(address)
                                 
                                 not_done_with_Q= False
