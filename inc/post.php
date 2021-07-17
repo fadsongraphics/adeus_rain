@@ -3,7 +3,7 @@
 require_once "conn.php";
 
 	$time = time();
-	$active_time = $time - 60;
+	$active_time = $time - 10;
 
 if ($update_page=post('update_page')) {
 	$return = array();
