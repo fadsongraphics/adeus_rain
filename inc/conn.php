@@ -106,11 +106,10 @@ $server_url = "http://localhost/adeus_server/";
 
 
 $styles = array(
-	'Cooker'=>array('bg' => 'background-color: #abffb3; color: white; ', 'color'=>'color: #02BC47;', 'icon'=>'water-pump-g.svg'),
-	'Freezer'=>array('bg' => 'background-color: #0055FF; color: white;', 'color'=>'color: #fff;', 'icon'=>'air-conditioner-w.svg'),
-	'Fridge'=>array('bg' => 'background-color: #0055FF; color: white;', 'color'=>'color: #fff;', 'icon'=>'air-conditioner-w.svg'),
-	'Water Heater'=>array('bg' => 'background-color: #EDCBF9; color: white;', 'color'=>'color: #a653c9;;', 'icon'=>'cooker-p.svg'),
-	'Lights'=>array('bg' => 'background-color: #fff2ab; color: white;', 'color'=>'color: #FFAF47;', 'icon'=>'tg2.svg'),
+	'cooker'=>array('bg' => 'background-color: #abffb3; color: white; ', 'color'=>'color: #02BC47;', 'icon'=>'water-pump-g.svg'),
+	'freezer'=>array('bg' => 'background-color: #0055FF; color: white;', 'color'=>'color: #fff;', 'icon'=>'air-conditioner-w.svg'),
+	'water heater'=>array('bg' => 'background-color: #EDCBF9; color: white;', 'color'=>'color: #a653c9;;', 'icon'=>'cooker-p.svg'),
+	'lights'=>array('bg' => 'background-color: #fff2ab; color: white;', 'color'=>'color: #FFAF47;', 'icon'=>'tg2.svg'),
 	'disabled'=>array('bg' => 'background-color: #D9D8DD; color: white;', 'color'=>'color: #333;', 'icon'=>''),
 )
 

@@ -567,18 +567,18 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 		  <label for="exampleFormControlInput1" class="form-label">Device Name</label>
 		  <select id="device_name" class="form-control">
 		  	<option>Select</option>
-		  	<option value="Fan">Fan</option>
-		  	<option value="Cooker">Cooker</option>
-		  	<option value="Fridge">Fridge</option>
-		  	<option value="Freezer">Freezer</option>
-		  	<option value="Water Heater">Water Heater</option>
-		  	<option value="Lights">Lights</option>
-		  	<option value="Pump">Pump</option>
-		  	<option value="Kettle">Kettle</option>
-		  	<option value="Televison">Television</option>
-		  	<option value="Microwave">Microwave</option>
-		  	<option value="AC">AC</option>
-		  	<option value="Speakers">Speakers</option>
+		  	<option value="fan">Fan</option>
+		  	<option value="cooker">Cooker</option>
+		  	<option value="fridge">Fridge</option>
+		  	<option value="freezer">Freezer</option>
+		  	<option value="water heater">Water Heater</option>
+		  	<option value="lights">Lights</option>
+		  	<option value="pump">Pump</option>
+		  	<option value="kettle">Kettle</option>
+		  	<option value="televison">Television</option>
+		  	<option value="microwave">Microwave</option>
+		  	<option value="ac">AC</option>
+		  	<option value="speakers">Speakers</option>
 		  </select>
 		</div>
 
