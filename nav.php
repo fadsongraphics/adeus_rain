@@ -69,7 +69,7 @@
 			}
 
         });
-	}, 100);
+	}, 1000);
 </script>
 
 
@@ -168,7 +168,7 @@
 
             <div class="glass br-20 p-2" style="position: absolute; top: 10px; left: 10px; width: 200px; font-size: 16px;">
 
-                <p>Hi! Vivian, The Market looks nice today !!</p>
+                <p>Hi! I'm Viviene. The Market looks nice today !!</p>
 
                 <p><a href="#" style="text-decoration: none;">See More <i class="bx bx-right-arrow-alt" style="font-size: inherit; line-height: inherit;"></i></a></p>
 

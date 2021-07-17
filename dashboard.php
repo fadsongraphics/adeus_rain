@@ -4,7 +4,9 @@ require_once "inc/session.php";
 require_once "inc/conn.php";
 
 $total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
-$meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta='meter_power_O'"))->fetchArray(SQLITE3_ASSOC)['value'], 2);
+
+$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
+
 ?>
 
 		<div class="row">
@@ -20,9 +22,9 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 							22&deg;C
                         </div>
                         <div style="display: inline; float: right;">
-                            <p style="font-size: 35px; font-weight: bold;"><?php echo date("h:i") ?> <small><?php echo date("A") ?></small></p>
-                            <p style="font-size: 20px;"><?php echo date("l d M, Y"); ?></p>
-                            <p style="font-size: 15px">Ibadan Nigeria</p>
+                            <p style="font-size: 35px; font-weight: bold;" id="dashboardTime"><?php echo date("h:i") ?> <small><?php echo date("A") ?></small></p>
+                            <p style="font-size: 20px;" id="dashboardDate"><?php echo date("l d M, Y"); ?></p>
+                            <p style="font-size: 15px">Ibadan, Nigeria</p>
                         </div>
                     </div>
                 </div>
@@ -48,7 +50,7 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 
     		                </small>
 
-    		                <h6 style="font-weight: 900" class="mb-0"><img src="assets/svgs/energy1.svg" style="width: 20px; height: 20px;"/> <?php echo $meter_power; ?></h6>
+    		                <h6 style="font-weight: 900" id="dashboardTEC" class="mb-0"><img src="assets/svgs/energy1.svg" style="width: 20px; height: 20px;"/> -- </h6>
 
     		                <small style="font-size: 10px">Total Energy Consumed</small>
 
@@ -71,8 +73,7 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 
     		                </small>
 
-        		            <h6 style="font-weight: 900" class="mb-0"><img src="assets/svgs/energy1.svg" style="width: 20px; height: 20px;"/> <?php echo $meter_power; ?>
-	        		        </h6>
+        		            <h6 style="font-weight: 900" id="dashboardTEG" class="mb-0"><img src="assets/svgs/energy1.svg" style="width: 20px; height: 20px;"/> -- </h6>
 
         		            <small style="font-size: 10px">Total Energy Generated</small>
 
@@ -167,7 +168,7 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
 		                    </div>
 
 		                    <div class="pos-left-center p-3">
-		                        <h3 id="energy_consumed_card" style="font-weight: 900;"><?php echo $total_energy_consumed;?></h3>
+		                        <h3 id="dashboardSM" style="font-weight: 900;"><?php echo $total_energy_consumed;?></h3>
 
 		                        <p>Smart<br/>Devices</p>
 		                    </div>
@@ -291,7 +292,7 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
                                         <div style="display: inline; float: right; margin-top: 3px">
 
                                             <label class="switch" style="transform: rotate(90deg)">
-                                                <input <?php echo $active ? '': 'disabled';?> onclick="toggleDevice('<?php echo $d['device_id']; ?>')" type="checkbox" <?php echo $d['state'] ? "":"checked"; ?>>
+                                                <input <?php echo $active ? '': 'disabled';?> onclick="toggleDevice('<?php echo $d['device_id']; ?>')" type="checkbox" <?php echo $d['state'] ? "":"checked"; ?> id="<?php echo $d['device_id'];?>_input">
                                                 <span class="slider" <?php echo $active ? '': "style='background:grey'";?>></span>
                                             </label>
 
@@ -374,13 +375,6 @@ $meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta
         });
     }
 
-    $("#energyTimeSelect").on('input', function(){
-        $.post(postLink, {energy_graph:  $("#energyTimeSelect").val()}, function(res){
-            $("#scriptLoader").html(res);
-            console.log(res);
-        })
-    });
-
 </script>
 
 
@@ -426,14 +420,14 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		indexLabelFontSize: 16,
 		dataPoints: [
 		<?php 
+			if(1){
 		$day_30 = date("Y-m-d", strtotime("30 days ago"));
-		$all_energy2=$db->query("SELECT * FROM meter_power_graph WHERE meter='O' AND day>'$day_30'");
+		$all_energy2=$db->query("SELECT * FROM meter_power_graph WHERE meter_type='G' AND day>'$day_30'");
 		while($x3 = $all_energy2->fetchArray(SQLITE3_ASSOC)){
 			@$all_energies2[$x3['day']]+=$x3['last_power'];
 		}
 
 
-			if(1){
 				for($i=29;$i>-1;$i--){ 
 				$day_index = date("Y-m-d", strtotime("$i days ago"));
 			?>
@@ -444,6 +438,44 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 chart.render();
+
+
+
+	
+	function updatePage(){
+		$.post(postLink, {update_page:  'dashboard', energy_period: $("#energyTimeSelect").val()}, function(res){
+			console.log(res);
+            if (nlp = JSON.parse(res)){
+				document.getElementById('dashboardTime').innerHTML = nlp.dashboardTime;
+				document.getElementById('dashboardDate').innerHTML = nlp.dashboardDate;
+				document.getElementById('dashboardTEG').innerHTML = nlp.dashboardTEG;
+				document.getElementById('dashboardTEC').innerHTML = nlp.dashboardTEC;
+				document.getElementById('dashboardSM').innerHTML = nlp.dashboardSM;
+				// document.getElementById('device_energy').innerHTML = nlp.device_energy;
+				// document.getElementById('meter').innerHTML = nlp.meter;
+				// document.getElementById('time').innerHTML = nlp.time;
+
+				var devices = nlp.devices;
+
+				for (var i = devices.length - 1; i >= 0; i--) {
+					if (devices[i].state==1) {
+						$("#" + devices[i].device_id + "_input").prop("checked", true);
+					}else{
+						$("#" + devices[i].device_id + "_input").prop("checked", false);
+					}
+				}
+
+				console.log(nlp);
+				setTimeout(function(){
+					updatePage();
+				}, 5000);
+			}
+
+        });
+	}
+
+	updatePage();
+
 
 
 

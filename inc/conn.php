@@ -2,13 +2,38 @@
 
 // session_start();
 
+// TIMEZONE
 date_default_timezone_set("Africa/Lagos");
 
+
+// ERRORS
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 
-require_once "db.php";
+// DB
+if (file_exists("/var/www/adeus.db")) {
+  $db_loc='/var/www/adeus.db';
+  $hub_config = json_decode(file_get_contents("/var/www/hub.config"));
+  $mode = 'test';
+}else{
+  $db_loc='C:/xampp/htdocs/inc/adeus.db';
+  $hub_config = json_decode(file_get_contents("C:/xampp/htdocs/hub.config"));
+  $mode = 'live';
+}
+
+
+
+$hub_id = $hub_config->hub_id;
+$hub_key = $hub_config->secret_key;
+
+// $db_loc='/var/www/html/inc/adeus.db';
+
+$db = new SQLite3($db_loc);
+// $db->busyTimeout(30000);
+
+// require_once "db.php";
+
 
 $source = 'grid';
 

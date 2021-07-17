@@ -80,7 +80,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
                                         <div style="display: inline; float: right; margin-top: 3px">
 
                                             <label class="switch" style="transform: rotate(90deg)">
-                                                <input <?php echo $active ? '': 'disabled';?> onclick="toggleDevice('<?php echo $d['device_id']; ?>')" type="checkbox" <?php echo $d['state'] ? "":"checked"; ?>>
+                                                <input <?php echo $active ? '': 'disabled';?> onclick="toggleDevice('<?php echo $d['device_id']; ?>')" type="checkbox" <?php echo $d['state'] ? "":"checked"; ?>  id="<?php echo $d['device_id'];?>_input">
                                                 <span class="slider" <?php echo $active ? '': "style='background:grey'";?>></span>
                                             </label>
 
@@ -278,7 +278,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
 		                    <div class="mt-3">
 		                        <span style="font-size: 18px;">Today</span><br/>
-		                        <h6 style="font-weight: 900; font-size: 24px" class="mb-0"><?php echo $energy_consumed; ?></h6>
+		                        <h6 style="font-weight: 900; font-size: 24px" class="mb-0" id="devicesSM"><?php echo $energy_consumed; ?></h6>
 		                    </div>
 
 
@@ -565,7 +565,19 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
 	    <div class="mb-3">
 		  <label for="exampleFormControlInput1" class="form-label">Device Name</label>
-		  <input type="text" id="device_name" class="form-control">
+		  <select id="device_name" class="form-control">
+		  	<option>Select</option>
+		  	<option value="Cooker">Cooker</option>
+		  	<option value="Freezer">Freezer</option>
+		  	<option value="Water Heater">Water Heater</option>
+		  	<option value="Lights">Lights</option>
+		  	<option value="Pump">Pump</option>
+		  	<option value="Kettle">Kettle</option>
+		  	<option value="Televison">Television</option>
+		  	<option value="Microwave">Microwave</option>
+		  	<option value="AC">AC</option>
+		  	<option value="Speakers">Speakers</option>
+		  </select>
 		</div>
 
 		<br>
@@ -615,6 +627,41 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
              onclick="pager('devices.php', 'notifyNav')"
         })
     }
+
+
+
+	
+	function updatePage(){
+		$.post(postLink, {update_page:  'devices'}, function(res){
+			console.log(res);
+            if (nlp = JSON.parse(res)){
+				document.getElementById('devicesSM').innerHTML = nlp.devicesSM;
+				// document.getElementById('device_energy').innerHTML = nlp.device_energy;
+				// document.getElementById('meter').innerHTML = nlp.meter;
+				// document.getElementById('time').innerHTML = nlp.time;
+
+				var devices = nlp.devices;
+
+				for (var i = devices.length - 1; i >= 0; i--) {
+					if (devices[i].state==1) {
+						$("#" + devices[i].device_id + "_input").prop("checked", true);
+					}else{
+						$("#" + devices[i].device_id + "_input").prop("checked", false);
+					}
+				}
+
+				console.log(nlp);
+				setTimeout(function(){
+					updatePage();
+				}, 3000);
+			}
+
+        });
+	}
+
+	updatePage();
+
+
 </script>
 
 <?php 

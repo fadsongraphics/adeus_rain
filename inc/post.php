@@ -4,22 +4,26 @@ require_once "conn.php";
 
 	$time = time();
 	$active_time = $time - 60;
+
 if ($update_page=post('update_page')) {
+	$return = array();
 
 	if($update_page=='dongle_view'){
 		
 		$time_view = date('h:i')." <span style='font-weight:lighter'>".date("A")."</span>";
 		$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
 
+		$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
+
+		$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
+
+		$devices = $db->query("SELECT COUNT(*) AS count FROM device_active WHERE off_time>$active_time")->fetchArray()['count'].'/'.$db->query("SELECT COUNT(*) AS count FROM device_summary")->fetchArray()['count'];
+
 		if(@$nlp_q = file_get_contents("/var/www/html/python/nlp_q.txt")){
 			$nlp_r = file_get_contents("/var/www/html/python/nlp_r.txt");
 
-			$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
 
-			$meter_power = energy_format(($db->query("SELECT value FROM meta_data WHERE meta='meter_power_O'"))->fetchArray(SQLITE3_ASSOC)['value'], 2);
-			$devices = $db->query("SELECT COUNT(*) AS count FROM device_active WHERE off_time>$active_time")->fetchArray()['count'].'/'.$db->query("SELECT COUNT(*) AS count FROM device_summary")->fetchArray()['count'];
-
-			$nlp_array = array(
+			$return = array(
 				"trigger"=>$trigger,
 				"nlp_q"=>$nlp_q,
 				"nlp_r"=>$nlp_r,
@@ -30,20 +34,88 @@ if ($update_page=post('update_page')) {
 			);
 
 		}else{
-			$nlp_array = array(
+			$return = array(
 				"trigger"=>'false',
 				"nlp_q"=>'',
 				"nlp_r"=>'',
-				"device_energy"=>'0.0Wh',
-				"meter"=>'0.00Wh',
-				'devices'=>'0/0',
+				"device_energy"=>$total_energy_consumed,
+				"meter"=>$meter_power,
+				"devices"=>$devices,
 				"time"=> $time_view,
 			);
 		}
-			echo json_encode($nlp_array);
 	}
 
+	elseif($update_page=='dashboard'){
+
+		$energy_period = softSan(post('energy_period'));
+		$where =  "day>'".date('Y-m-d', strtotime($energy_period))."'";
+
+		$devices_q = $db->query("SELECT device_id, state FROM device_summary ");
+		$device=array();
+		while($x = $devices_q->fetchArray(SQLITE3_ASSOC)){
+			$device[]=$x;
+		}
+
+		$return = array(
+			"dashboardTime"=>date("h:i").'<small>'.date("A").'</small>',
+			"dashboardDate"=>date("l d M, Y"),
+			"dashboardTEC"=>energy_format(($db->query("SELECT SUM(last_power) FROM meter_power_graph WHERE meter_type='C' AND $where"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2),
+
+			"dashboardTEG"=>energy_format(($db->query("SELECT SUM(last_power) FROM meter_power_graph WHERE meter_type='G' AND $where"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2),
+			
+			"dashboardSM"=>energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph WHERE $where"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2),
+
+			"devices"=>$device
+		);
+	}
+
+	elseif($update_page=='devices'){
+
+		$devices_q = $db->query("SELECT device_id, state FROM device_summary ");
+		$device=array();
+		while($x = $devices_q->fetchArray(SQLITE3_ASSOC)){
+			$device[]=$x;
+		}
+
+		$return = array(
+			
+			"devicesSM"=>energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2),
+			
+			"devices"=>$device
+		);
+	}
+
+	echo json_encode($return);
 }
+
+
+if (post('tts')) {
+
+		$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
+
+		if(@$nlp_q = file_get_contents("/var/www/html/python/nlp_q.txt")){
+			$nlp_r = file_get_contents("/var/www/html/python/nlp_r.txt");
+
+
+			$return = array(
+				"trigger"=>$trigger,
+				"nlp_q"=>$nlp_q,
+				"nlp_r"=>$nlp_r,
+			);
+
+		}else{
+			$return = array(
+				"trigger"=>'false',
+				"nlp_q"=>'',
+				"nlp_r"=>'',
+			);
+		}
+
+	echo json_encode($return);
+}
+
+
 
 
 if (post('add_device')) {
@@ -216,6 +288,15 @@ if(post('device_graph')){
 			echo date('G A', $new_time).' - '.$val;
 			echo '<br>';
 		}
+
+
+		?>
+		<br>
+		<br>
+		<br>
+
+		<button disabled class="btn btn-sm btn-danger"><i class="bx bx-trash"></i> DELETE </button>
+		<?php
 
 
 

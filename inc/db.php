@@ -1,15 +1,4 @@
 <?php
-
-if (file_exists("/var/www/adeus.db")) {
-  $db_loc='/var/www/adeus.db';
-}else{
-  $db_loc='C:/xampp/htdocs/inc/adeus.db';
-}
-  
-  // $db_loc='/var/www/html/inc/adeus.db';
-
-  $db = new SQLite3($db_loc);
-  $db->busyTimeout(30000);
   
 
   // $db->exec("CREATE TABLE IF NOT EXISTS `device_active` (

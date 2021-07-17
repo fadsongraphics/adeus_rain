@@ -1,7 +1,5 @@
 <?php 
 
-
-
 require_once "inc/session.php";
 require_once "inc/conn.php";
 
@@ -10,7 +8,8 @@ $db->exec("UPDATE meta_data SET value='false' WHERE meta='trigger'");
 
 $total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
 
-$meter_power = energy_format(($db->query("SELECT SUM(last_power) FROM meter_power_graph WHERE meter='I'"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
+$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
+
 
 
 if (get('shutdown')) {
@@ -64,7 +63,7 @@ if (get('update')) {
  <style type="text/css">
  	body{
  		margin: auto;
- 		background: url('assets/images/dongle_view_bg.png') center no-repeat;
+ 		background: pink url('assets/images/dongle_view_bg.png') center no-repeat;
  		background-size: cover;
 		background-attachment:fixed;
 		overflow: hidden;
@@ -339,7 +338,7 @@ if (get('update')) {
 
 				setTimeout(function(){
 					updatePage();
-				}, 500);
+				}, 1000);
 			}
 
         });
@@ -349,6 +348,9 @@ if (get('update')) {
 </script>
 
 <?php 
+
+include "cron/cron.php";
+
 $db->close();
 unset($db);
  ?>
