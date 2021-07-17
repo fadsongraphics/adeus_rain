@@ -30,7 +30,7 @@ $hub_key = $hub_config->secret_key;
 // $db_loc='/var/www/html/inc/adeus.db';
 
 $db = new SQLite3($db_loc);
-// $db->busyTimeout(30000);
+$db->busyTimeout(30000);
 
 // require_once "db.php";
 
