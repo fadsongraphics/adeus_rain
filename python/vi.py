@@ -92,6 +92,8 @@ soundObj38 = pygame.mixer.Sound('38.wav')
 soundObj39 = pygame.mixer.Sound('39.wav')
 soundObja = pygame.mixer.Sound('bbm_tone.wav')
 soundObjb = pygame.mixer.Sound('Pipes.wav')
+soundObjrun = pygame.mixer.Sound('run.wav')
+
 
 
 
@@ -915,6 +917,8 @@ try:
                         # # sd.play(data, fs)
                         # status = sd.wait()
                         soundObj.play()
+
+                        soundObjrun.play()
 
                         not_done_with_Q= True
 
