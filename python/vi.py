@@ -675,7 +675,7 @@ def sayeed (num):
 
     if x >= 1:
         n = math.floor(x)
-        x = round(x-n,3)
+        x = math.floor(x-n,3)
 
         if n == 19:
             soundObj19a.play()
@@ -819,14 +819,14 @@ def stephen ():
     time.sleep (2)
 
     pygame.mixer.init()
-    pygame.mixer.Sound(d7 + 'a.wav').play()
+    pygame.mixer.Sound(d7.lower() + 'a.wav').play()
     time.sleep (1)
 
 
 
 #this says the date
     pygame.mixer.init()
-    pygame.mixer.Sound(d2 + 'a.wav').play()
+    pygame.mixer.Sound(d2.lower() + 'a.wav').play()
     time.sleep (1)
 
     sayeed (d3)
@@ -918,7 +918,7 @@ try:
                         # status = sd.wait()
                         soundObj.play()
 
-                        soundObjrun.play()
+                        #soundObjrun.play()
 
                         not_done_with_Q= True
 
