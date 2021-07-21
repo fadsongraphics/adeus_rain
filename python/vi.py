@@ -110,7 +110,7 @@ times = ['today', 'yesterday', 'last week', 'last month', 'a month ago', 'two da
 quantity = []
 currency = []
 period= []
-today = datetime.now()
+
 
 def get_intent(text):
   global device, quantity, currency, period
@@ -186,12 +186,12 @@ def intent2action(intent):
         soundObj21.play()
         time.sleep(2)
 
-        text += f'.{d}.'
+        text += f'{d}'
 
         soundObj23.play()
         time.sleep(2)
 
-        text += f'.{period}.'
+        text += f'{period}'
 
         soundObj24.play()
         time.sleep(2)
@@ -232,7 +232,7 @@ def intent2action(intent):
         soundObj26.play()
         time.sleep(2)
 
-        text += f'.{d}.'
+        text += f'{d}.'
 
     else:
       soundObj2.play()
@@ -473,12 +473,14 @@ def intent2action(intent):
     #text+= f"The weather today is..." #get from db
 
   elif intent == 'know_date':
+        
     # d2 = today.strftime("%B %d, %Y")
 
     # soundObj38.play()
     # time.sleep(2)
     
     # text+= f"{d2}" 
+    today = datetime.now()
     stephen ()
     time.sleep(23)
     not_done_with_Q= False
@@ -777,10 +779,12 @@ def sayeed (num):
                 x = x - (n*0.001)
 
 def stephen ():
+      
     
-
+    today = datetime.now()
     d2 = today.strftime("%B")
     d7 = today.strftime("%A")
+
    
     d3 = int(today.strftime("%d"))
     d4 = int(today.strftime("%Y"))
@@ -927,8 +931,10 @@ try:
                         
                         
                         while not_done_with_Q:
+                              
                              
                             data= q.get()
+
                             if rec.AcceptWaveform(data):
                                 jres = json.loads((rec.Result()))
                                 print (jres['text'])    
@@ -1038,7 +1044,7 @@ try:
                                       # sd.play(data, fs)
                                       #status = sd.wait()
                                       
-
+                            
                             if ("thank you" in jres["text"]) or ("bye" in jres["text"]):
                                 address = fr"http://localhost/nlp?trigger=false"
                                 requests.get(address)
