@@ -1,86 +1,109 @@
-<?php
+<?php 
 
-require_once "inc/session.php";
-require_once "inc/conn.php";
-
-$db->exec("UPDATE meta_data SET value='false' WHERE meta='trigger'");
+require "../inc/conn.php";
 
 
-	require_once "nav.php";
-	echo "<div id='page'>";
-if(get('page')){
 
-	require_once get('page').".php";
-	?>
-	<script>$(".sidenav-item").removeClass('sidenav-active');$("#<?php echo get('page');?>Nav").addClass('sidenav-active');</script>
-	<?php
 
-}else{
+if (get('trigger')) {
+    $trig = get('trigger');
 
-	require_once "dashboard.php";
+    if($trig=='true'){
+        $db->exec("UPDATE meta_data SET value='true' WHERE meta='trigger'");
+    }
+
+    if($trig=='false'){
+        $db->exec("UPDATE meta_data SET value='false' WHERE meta='trigger'");
+    }
 
 }
 
 
- ?>
+if (get('key')) {
 
-</body>
-
-<script type="text/javascript">
-
-	var loader = "<div class='container-fluid' style='height:100vh;'><div class='row'><div class='col-12' style='display: flex; height: 70vh; align-items: center; justify-content: center;'><img src='assets/images/loader.gif' width='100px' height='100px'/></div</div></div>"; // This should  loading gif image
-
-	function showLoader(){
-		$("#page").fadeOut('fast', function(){
-			$("#page").empty();
-			$("#page").html(loader);
-			$("#page").fadeIn('fast');
-		});
+	$device=urldecode(get('device'));
+	$answer = array("status"=>1, 'response'=>'');
+	
+	if (get('turn_off')) {
+		$db->exec("UPDATE device_summary SET state=1 WHERE device_name='$device'");
 	}
 
-	function pager(e, f){
-		showLoader();
-		setTimeout(function(){
+	if (get('turn_on')) {
+		$db->exec("UPDATE device_summary SET state=0 WHERE device_name='$device'");
+	}
 
-			$.ajax({
-			    type: "GET",
-			    url: e,
-			    data: {},
-			    success: function(result){
+	if (get('get_state')) {
+	$curr_query = $db->query("SELECT state FROM device_summary WHERE device_name='$device'");
+		if ($curr_assoc=$curr_query->fetchArray(SQLITE3_ASSOC)) {
+			$curr_state=$curr_assoc['state'];
+			if ($curr_state==1) {
+				$answer['response'] = "off";
+			}else if($curr_state==0){
+				$answer['response'] = "on";
+			}
 
-    				$("#page").fadeOut('fast', function(){
-
-					$("#page").empty();
-    				$("#page").html(result);
-    				$("#page").fadeIn('medium');
-    				});
-
-    				$(".sidenav-item").removeClass('sidenav-active');
-    				$("#"+f).addClass('sidenav-active');
-
-			    },
-			    error: function(){
-
-			        $("#page").hide();
-
-			        var result = '<div class="row"><div class="col-12"><div class="glass p-5"><div class="row"><div class="col-lg-12 p-5 text-center br-20" style="display: flex; align-items: center; justify-content: center; height: 70vh"><div><h1><span class="bx bx-warning"></span>No connection!</h1></div></div></div></div></div></div>';
-
-    				$("#page").html(result);
-    				$("#page").fadeIn();
-
-    				$(".sidenav-item").removeClass('sidenav-active');
-
-			    }
-
-			});
-
-		}, 800);
-	};
-
-	// pager('...billing.php', "billingNav");
+		}else{
+		
+			$answer['status'] = 0;
+			$answer['response']=' not available';
+		}
 
 
-	$(document).ready(function(){
+	}
 
-	})
-</script>
+
+	if (get('get_energy')) {
+
+		if (get('period')) {
+			$period = get('period');
+		}else{
+			$period = "today";
+		}
+
+		if (get('device')) {
+
+			if (@$device_id=$db->query("SELECT device_id FROM device_summary WHERE device_name='$device'")->fetchArray(SQLITE3_ASSOC)['device_id']) {
+
+				$sql = "SELECT SUM(last_power) FROM device_power_graph WHERE day>'".date('Y-m-d', strtotime($period))."' AND device_id='$device_id'";
+				
+				$energy = $db->query($sql)->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'];
+
+				$answer['response'] = number_format($energy, 1)." watt hours";
+				
+			}else{
+				$answer['status']=0;
+				$answer['response']=' not found';
+			}
+
+		}else{
+			$sql = "SELECT SUM(last_power) FROM device_power_graph WHERE day>'".date('Y-m-d', strtotime($period))."'";
+
+				$energy = $db->query($sql)->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'];
+
+				$answer['response'] = number_format($energy, 1)." watt hours";
+		}
+
+
+	}
+
+	if (get('get_balance')) {
+		$answer['status'] = 0;
+		$answer['response'] = " unable to be retrieved right now";
+	}
+
+
+	if (get('get_balance')) {
+		$answer['status'] = 0;
+		$answer['response'] = " unable to be retrieved right now";
+	}
+
+	header('Content-Type: application/json');
+	echo json_encode($answer);
+	exit();
+}
+
+
+
+
+
+ ?>
