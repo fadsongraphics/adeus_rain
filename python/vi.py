@@ -105,7 +105,7 @@ soundObjrun = pygame.mixer.Sound('run.wav')
 df = pd.read_csv('Intents.csv', header = None, names = ['Examples', 'Intent'])
 device = []
 appliances= ['fridge', 'tv', 'television', 'ac','air conditioner','pump','waterpump',
-              'bulb','water pump','heater','microwave','cooker','kettle','electric kettle','light','speaker','refridgerator']
+              'bulb','water pump','heater','microwave','cooker','kettle','electric kettle','light','speaker','refridgerator','fan']
 currencies = ['dollars', 'pounds', 'euros', 'naira', 'yuan', 'canadian dollars', 'canadian dollar', 'australian dollars', 'australian dollar',
               'dollar','pound' , 'euro']
 times = ['today', 'yesterday', 'last week', 'last month', 'a month ago', 'two days ago', 'two months ago', 'three days ago', 'one month', 'one day']
@@ -386,7 +386,7 @@ def intent2action(intent):
     soundObj6.play()
     time.sleep(2)
     t="Sure how can I be of help?"
-    not_done_with_Q= False
+    
     soundObja.play()
 
   elif intent == 'Bored':
@@ -484,7 +484,7 @@ def intent2action(intent):
     # text+= f"{d2}" 
     today = datetime.now()
     stephen ()
-    time.sleep(23)
+    time.sleep(0.5)
     not_done_with_Q= False
     soundObja.play()
 
@@ -675,7 +675,7 @@ def sayeed (num):
 
     if x >= 1:
         n = math.floor(x)
-        x = math.floor(x-n,3)
+        x = round(x-n,3)
 
         if n == 19:
             soundObj19a.play()
@@ -1039,10 +1039,10 @@ try:
                                   else:
                                       speakword(adeus_reply)
                                       q.queue.clear()
-                                      #address = fr"http://localhost/nlp?trigger=false"
-                                      #requests.get(address)
+                                      address = fr"http://localhost/nlp?trigger=false"
+                                      requests.get(address)
                                 
-                                      
+                                      not_done_with_Q= False
                                       #filename = 'bbm_tone.wav'
                                       #data, fs = sf.read(filename, dtype='float32')
                                       # sd.play(data, fs)
