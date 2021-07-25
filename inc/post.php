@@ -13,10 +13,9 @@ if ($update_page=post('update_page')) {
 		$time_view = date('h:i')." <span style='font-weight:lighter'>".date("A")."</span>";
 		$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
 
-		#$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
-		$meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
+		$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
 
-		$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='G'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
+		$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
 
 		$devices = $db->query("SELECT COUNT(*) AS count FROM device_active WHERE off_time>$active_time")->fetchArray()['count'].'/'.$db->query("SELECT COUNT(*) AS count FROM device_summary")->fetchArray()['count'];
 
