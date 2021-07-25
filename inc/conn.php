@@ -88,11 +88,11 @@ function softSan($str){
 function energy_format($e, $b=2, $showUnit=true){
 	if ($showUnit==true) {
 		if($e<1000){
-			$txt = number_format($e, $b)."units";
+			$txt = number_format($e, $b)."Wh";
 		}elseif($e<1000000){
-			$txt = number_format($e/1000, $b)."units";
+			$txt = number_format($e/1000, $b)."kWh";
 		}else{
-			$txt = number_format($e/1000000, $b)."units";
+			$txt = number_format($e/1000000, $b)."mWh";
 		}
 	}
 	return $txt;
