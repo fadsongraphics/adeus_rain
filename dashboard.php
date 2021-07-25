@@ -5,9 +5,7 @@ require_once "inc/conn.php";
 
 $total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
 
-$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='G'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
-
-$meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
+$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
 
 ?>
 
@@ -127,7 +125,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
         					            <div style="width: 15px; height: 15px; background-color: #2d62ed; display: inline-block; border-radius: 5px"></div>
 
-        					            Consumption Balance
+        					            Smart Devices
 
         					        </span>
 
@@ -135,7 +133,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
         					            <div style="width: 15px; height: 15px; background-color: #02bc47; display: inline-block; border-radius: 5px"></div>
 
-        					            Production Sale
+        					            Energy Generated
 
         					        </span>
 
@@ -170,9 +168,9 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 		                    </div>
 
 		                    <div class="pos-left-center p-3">
-		                        <h3 id="dashboardSM" style="font-weight: 900;"><?php echo $meter_power_2;?></h3>
+		                        <h3 id="dashboardSM" style="font-weight: 900;"><?php echo $total_energy_consumed;?></h3>
 
-		                        <p>Consumption<br/>Balance</p>
+		                        <p>Smart<br/>Devices</p>
 		                    </div>
 
 		                    <div style="background-color: #d9d8dd; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
@@ -193,7 +191,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 		                    <div class="pos-left-center p-3">
 		                        <h3 style="font-weight: 900;"><?php echo $meter_power;?></h3>
 
-		                        <p>Production<br/>Sale</p>
+		                        <p>Energy<br/>Generated</p>
 		                    </div>
 
 		                    <div style="background-color: #dadee6; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
@@ -394,7 +392,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		// maximum: 30
 	},
 	axisY:{
-		title: "units",
+		title: "kWh",
 		// maximum: 60
 	},
 	data: [{
@@ -472,7 +470,7 @@ chart.render();
 					updatePage();
 				}, 5000);
 			}
-  
+
         });
 	}
 
