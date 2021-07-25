@@ -6,10 +6,9 @@ require_once "inc/conn.php";
 
 $db->exec("UPDATE meta_data SET value='false' WHERE meta='trigger'");
 
-#$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
+$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);
 
-$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='G'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
-$meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
+$meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
 
 
 
@@ -64,7 +63,7 @@ if (get('update')) {
  <style type="text/css">
  	body{
  		margin: auto;
- 		background: pink url('assets/images/dongle_bg.png') center no-repeat;
+ 		background: pink url('assets/images/dongle_view_bg.png') center no-repeat;
  		background-size: cover;
 		background-attachment:fixed;
 		overflow: hidden;
@@ -250,7 +249,7 @@ if (get('update')) {
 
 
 
- 	<div class="chatbx" id='chatbx'>"Say Hello Veviain"</div>
+ 	<div class="chatbx" id='chatbx'>"Say Hello Vivien"</div>
  	<div class="vivian"></div>
 
  	<br>
@@ -261,12 +260,12 @@ if (get('update')) {
  		<div class="col">
  			<a href="index.php">
  			<div class="circle">
-			<div class="title">Consumption Balance</div>
+			<div class="title">Device Consumed</div>
  				<div class="bg-circle" style="color: #3960fd">
                     <img src="assets/svgs/energy1.svg" style="width: 30px; height: 30px;margin-right: -10px;"/>
- 					<span id='device_energy'><?php echo $meter_power_2;?></span>
+ 					<span id='device_energy'><?php echo $total_energy_consumed;?></span>
 				</div>
- 				<div class="bg-footer">From Smart <br><span style='color: #3960fd;'>Meter</span></div>
+ 				<div class="bg-footer">From Smart <br><span style='color: #3960fd;'>Devices</span></div>
  			</div>
 	 		</a>
  		</div>
@@ -274,12 +273,12 @@ if (get('update')) {
  		<div class="col">
  			<a href="index.php">
  			<div class="circle">
-			<div class="title">Production Sale</div>
+			<div class="title">Energy Generated</div>
  				<div class="bg-circle" style="color: #b76f14">
                     <img src="assets/svgs/energy1.svg" style="width: 30px; height: 30px;margin-right: -10px;"/>
  					<span id='meter'><?php echo $meter_power;?></span>
  				</div>
- 				<div class="bg-footer">Total<br> <span style='color: #b76f14;'>Energy</span></div>
+ 				<div class="bg-footer">Total <br> <span style='color: #b76f14;'>Energy</span></div>
  			</div>
 	 		</a>
  		</div>
@@ -327,7 +326,7 @@ if (get('update')) {
 				if(new_trigger !== trigger){
 					if(trigger=='false'){
 						$('#greyness').fadeOut();
-						document.getElementById('chatbx').innerHTML = "\"Say Hello Veviain\"";
+						document.getElementById('chatbx').innerHTML = "\"Say Hello Vivien\"";
 					}
 					if(trigger=='true'){
 						console.log('dfdfd');
