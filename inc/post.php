@@ -134,6 +134,23 @@ if (post('tts')) {
 
 
 
+if (post('submitWifi')) {
+	$ssid = post('ssid');
+	$wifi_key = post('wifi_key');
+
+	$text = '
+		network={
+		ssid="'.$ssid.'"
+		psk="'.$wifi_key.'"
+		}
+	';
+
+	file_put_contents("/var/www/wpa_supplicant.conf", $text);
+	exec("sudo reboot");
+}
+
+
+
 if (post('add_device')) {
 	$add_device_id = softSan($_POST['socket_id']);
 	$device_name = softSan($_POST['device_name']);

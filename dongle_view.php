@@ -29,7 +29,7 @@ if (get('update')) {
 
 		if(exec("sudo git pull")){
 
-			echo ("Successfull. Rebooting in 5 seconds...<br>");
+			echo ("Successful. Rebooting in 5 seconds...<br>");
 
 			echo "<meta http-equiv='refresh'  content='5,url=?restart=1'>";
 			exit();

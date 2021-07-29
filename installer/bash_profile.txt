@@ -4,9 +4,13 @@ sudo chmod a+x /var/www/html/installer/update.sh
 
 sudo source /var/www/html/installer/update.sh
 
-sudo wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant.conf -iwlan0 -Dnl80211,wext
+sudo ip link set dev wlxd0374527ac7b up
+sudo wpa_supplicant -B -c/var/www/wpa_supplicant.conf -iwlxd0374527ac7b -Dnl80211,wext
+sudo dhclient wlxd0374527ac7b &
+
+sudo /usr/sbin/alsactl init
 
 cd /var/www/html/python
 python3 vi.py&
 
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor > /dev/null 2>&1
