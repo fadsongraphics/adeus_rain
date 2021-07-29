@@ -225,7 +225,7 @@ if (get('update')) {
 	}
 
  </style>
- <body>
+ <body id="body">
 
  	<div class="greyness" id="greyness"></div>
 
@@ -242,7 +242,7 @@ if (get('update')) {
  		<div class="nav2">
  			<a href="?shutdown=1"><div class="shutdown"><i class='bx bx-power-off'></i></div></a>
  			<a href="?restart=1"><div class="restart"><i class='bx bx-refresh' ></i></div></a>
- 			<a href="?update=1"><div class="update"><i class='bx bx-download'></i></div></a>
+ 			<a href="?update=1" onclick="document.getElementById('body').innerHTML =''; "><div class="update"><i class='bx bx-download'></i></div></a>
  			<div style="clear: both"></div>
  		</div>
 
