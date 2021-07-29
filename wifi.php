@@ -7,12 +7,12 @@ require_once "inc/conn.php";
 
 	$wifi_dongle = $hub_config->wifi_dongle;
 
-	$wifis = shell_exec("sudo iwlist $wifi_dongle scan | grep ESSID");
+	$wifis = shell_exec("/sbin/iwlist $wifi_dongle scan | grep ESSID");
 
 	$iwconfig = shell_exec("/sbin/iwconfig");
 
 
- ?>
+ ?>	
 
 <div class="row">
 	<br>
