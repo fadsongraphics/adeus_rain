@@ -9,18 +9,19 @@ require_once "inc/conn.php";
 
 	$wifi_text = shell_exec("/sbin/iwlist $wifi_dongle scan | grep ESSID");
 
-	$wifi_text = 'ESSID:"Stephen" ESSID:"Stephen"';
 	$wt1 = explode(' ', trim($wifi_text));
 	foreach($wt1 as $wt2){
 		$wt3 = explode("ESSID:", trim($wt2));
-		$wt = $wt3[1];
-		$wt = ltrim($wt, '"');
-		$wt = rtrim($wt, '"');
-		$wifis[] = $wt;
+		if (isset($wt3[1])) {
+			$wt = $wt3[1];
+			$wt = ltrim($wt, '"');
+			$wt = rtrim($wt, '"');
+			$wifis[] = $wt;
+		}
 	}
 
 
-	$iwconfig = shell_exec("/sbin/iwconfig");
+	// $iwconfig = shell_exec("/sbin/iwconfig");
 
 
  ?>	
@@ -38,7 +39,7 @@ require_once "inc/conn.php";
 	                <div class="main-card-custom shadow-sm p-3 mt-0">
 
 	                    <div class="row">
-	                    	
+
 				                <div class="form-group">
 
 				                <h6 class="font-weight-bold">Wifi Name</h6>				                	
@@ -57,7 +58,7 @@ require_once "inc/conn.php";
 					            <div class="form-group">
 					            		
 				                <h6 class="font-weight-bold">Password</h6>				                	
-				            	<input type="" id="wifi_key" class="form-control" placeholder="Leave Empty if blank">
+				            	<input type="" id="wifi_key" class="form-control" placeholder="Leave blank if empty">
 
 					            </div>
 
