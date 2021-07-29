@@ -289,8 +289,7 @@ if (get('update')) {
  			<div class="circle">
 			<div class="title">Devices</div>
  				<div class="bg-circle" id="devices" style="color: brown">
- 					<?php $active_time = time() - 10; ?>
- 					<?php echo $db->query("SELECT COUNT(*) AS count FROM device_active WHERE off_time>$active_time")->fetchArray()['count']; ?>
+ 					<?php echo $db->query("SELECT COUNT(*) AS count FROM device_active WHERE off_time>$time_buffer")->fetchArray()['count']; ?>
  					/
  					<?php echo $db->query("SELECT COUNT(*) AS count FROM device_summary")->fetchArray()['count']; ?></div>
  				<div class="bg-footer">Connected<br>Devices</div>

@@ -42,7 +42,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
                                         <div style="display: inline; margin-left: 5px;">
 
-                                            <span class="font-weight-bold" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">UNKNOWN DEVICE - <?php echo $d['device_id']; ?></span>
+                                            <span class="font-weight-bold" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">NEW DEVICE - <?php echo $d['device_id']; ?></span>
 
                                         </div>
 
@@ -247,9 +247,9 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
 		            </div>
 
-		            <button class="btn btn-primary rounded-circle pos-center-bottom" style="width: 50px; height: 50px; padding: 0px; font-size: 45px; display: flex; align-items: center; justify-content: center;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">
+		            <!-- <button class="btn btn-primary rounded-circle pos-center-bottom" style="width: 50px; height: 50px; padding: 0px; font-size: 45px; display: flex; align-items: center; justify-content: center;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">
 		                +
-		            </button>
+		            </button> -->
 
 		        </div>
 
@@ -611,8 +611,11 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
     var postLink = "inc/post.php";
 
     function toggleDevice(e){
-        $.post(postLink, {toggle_state: e}, function(res){
-            console.log(res);
+    	var state = $("#"+e+"_input").prop('checked');
+    	new_state = "0";
+    	if(state){var new_state = '1';}
+        $.post(postLink, {toggle_id: e, toggle_state: new_state}, function(res){
+            // console.log(res);
         });
     }
 
@@ -620,13 +623,21 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
         $.post(postLink, {device_graph:  e}, function(res){
             $("#deviceInfo").html(res);
 			$("#deviceModal").modal("show");
-            console.log(res);
         })
     }
 
     function add_device(){
         $.post(postLink, {add_device: 1, socket_id: $("#socket_id").val(), device_name: $("#device_name").val()}, function(res){
-             onclick="pager('devices.php', 'notifyNav')"
+			$("#deviceModal").modal("hide");
+             pager('devices.php', 'devicesNav');
+        })
+    }
+
+    function delete_socket(e){
+        $.post(postLink, {delete_device: e}, function(res){
+            console.log(res);
+			$("#deviceModal").modal("hide");
+            pager('devices.php', 'devicesNav');
         })
     }
 
@@ -638,9 +649,6 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 			console.log(res);
             if (nlp = JSON.parse(res)){
 				document.getElementById('devicesSM').innerHTML = nlp.devicesSM;
-				// document.getElementById('device_energy').innerHTML = nlp.device_energy;
-				// document.getElementById('meter').innerHTML = nlp.meter;
-				// document.getElementById('time').innerHTML = nlp.time;
 
 				var devices = nlp.devices;
 
@@ -649,6 +657,12 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 						$("#" + devices[i].device_id + "_input").prop("checked", true);
 					}else{
 						$("#" + devices[i].device_id + "_input").prop("checked", false);
+					}
+
+					if (devices[i].active=='true') {
+						$("#" + devices[i].device_id + "_input").parent().show();
+					}else{
+						$("#" + devices[i].device_id + "_input").parent().hide();
 					}
 				}
 

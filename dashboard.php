@@ -54,7 +54,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
     		                <h6 style="font-weight: 900" id="dashboardTEC" class="mb-0"><img src="assets/svgs/energy1.svg" style="width: 20px; height: 20px;"/> -- </h6>
 
-    		                <small style="font-size: 10px">Total Energy Consumed</small>
+    		                <small style="font-size: 10px">Sockets Consumed</small>
 
     		            </div>
 
@@ -256,7 +256,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
                                         <div style="display: inline; margin-left: 5px;">
 
-                                            <span class="font-weight-bold">UNKNOWN DEVICE - <?php echo $d['device_id']; ?></span>
+                                            <span class="font-weight-bold">NEW DEVICE - <?php echo $d['device_id']; ?></span>
 
                                         </div>
 
@@ -372,7 +372,10 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
 
     function toggleDevice(e){
-        $.post(postLink, {toggle_state: e}, function(res){
+    	var state = $("#"+e+"_input").prop('checked');
+    	new_state = "0";
+    	if(state){var new_state = '1';}
+        $.post(postLink, {toggle_id: e, toggle_state: new_state}, function(res){
             console.log(res);
         });
     }
@@ -451,8 +454,8 @@ chart.render();
 				document.getElementById('dashboardTime').innerHTML = nlp.dashboardTime;
 				document.getElementById('dashboardDate').innerHTML = nlp.dashboardDate;
 				document.getElementById('dashboardTEG').innerHTML = nlp.dashboardTEG;
-				document.getElementById('dashboardTEC').innerHTML = nlp.dashboardTEC;
-				document.getElementById('dashboardSM').innerHTML = nlp.dashboardSM;
+				document.getElementById('dashboardSM').innerHTML = nlp.dashboardTEC;
+				document.getElementById('dashboardTEC').innerHTML = nlp.dashboardSM;
 				// document.getElementById('device_energy').innerHTML = nlp.device_energy;
 				// document.getElementById('meter').innerHTML = nlp.meter;
 				// document.getElementById('time').innerHTML = nlp.time;
@@ -464,6 +467,12 @@ chart.render();
 						$("#" + devices[i].device_id + "_input").prop("checked", true);
 					}else{
 						$("#" + devices[i].device_id + "_input").prop("checked", false);
+					}
+
+					if (devices[i].active=='true') {
+						$("#" + devices[i].device_id + "_input").parent().show();
+					}else{
+						$("#" + devices[i].device_id + "_input").parent().hide();
 					}
 				}
 
