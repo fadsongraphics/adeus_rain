@@ -25,11 +25,11 @@ if (get('key')) {
 	$answer = array("status"=>1, 'response'=>'');
 	
 	if (get('turn_off')) {
-		$db->exec("UPDATE device_summary SET state=1 WHERE device_name='$device'");
+		$db->exec("UPDATE device_summary SET state=0 WHERE device_name='$device'");
 	}
 
 	if (get('turn_on')) {
-		$db->exec("UPDATE device_summary SET state=0 WHERE device_name='$device'");
+		$db->exec("UPDATE device_summary SET state=1 WHERE device_name='$device'");
 	}
 
 	if (get('get_state')) {
