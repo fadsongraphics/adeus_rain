@@ -125,10 +125,6 @@ if (get('action')) {
 
 
 
-// SET ACTIVE TIME
-$time =time();
-$time_buffer = $time - 10;
-
 $off_query = $db->query("SELECT COUNT(*) as count FROM device_active WHERE device_id='$id' AND off_time>$time_buffer");
 if ($off_query->fetchArray(SQLITE3_ASSOC)['count']==0) {
 	$db->exec("INSERT INTO device_active(device_id, on_time, off_time) VALUES ('$id', '$time', '$time')");

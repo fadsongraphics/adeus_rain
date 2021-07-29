@@ -28,7 +28,7 @@ if ($update_page=post('update_page')) {
 				"trigger"=>$trigger,
 				"nlp_q"=>$nlp_q,
 				"nlp_r"=>$nlp_r,
-				"device_energy"=>$total_energy_consumed,
+				"device_energy"=>$meter_power_2,
 				"meter"=>$meter_power,
 				"devices"=>$devices,
 				"time"=> $time_view
@@ -39,7 +39,7 @@ if ($update_page=post('update_page')) {
 				"trigger"=>'false',
 				"nlp_q"=>'',
 				"nlp_r"=>'',
-				"device_energy"=>$total_energy_consumed,
+				"device_energy"=>$meter_power_2,
 				"meter"=>$meter_power,
 				"devices"=>$devices,
 				"time"=> $time_view,
@@ -55,6 +55,13 @@ if ($update_page=post('update_page')) {
 		$devices_q = $db->query("SELECT device_id, state FROM device_summary ");
 		$device=array();
 		while($x = $devices_q->fetchArray(SQLITE3_ASSOC)){
+			$x_id = $x['device_id'];
+			$off_time = $db->query("SELECT off_time FROM device_active WHERE device_id='$x_id' ORDER BY id DESC LIMIT 0,1")->fetchArray(SQLITE3_ASSOC)['off_time'];
+			if ($off_time > $time_buffer) {
+				$x['active']='true';
+			}else{
+				$x['active']='false';
+			}
 			$device[]=$x;
 		}
 
@@ -76,7 +83,15 @@ if ($update_page=post('update_page')) {
 		$devices_q = $db->query("SELECT device_id, state FROM device_summary ");
 		$device=array();
 		while($x = $devices_q->fetchArray(SQLITE3_ASSOC)){
+			$x_id = $x['device_id'];
+			$off_time = $db->query("SELECT off_time FROM device_active WHERE device_id='$x_id' ORDER BY id DESC LIMIT 0,1")->fetchArray(SQLITE3_ASSOC)['off_time'];
+			if ($off_time > $time_buffer) {
+				$x['active']='true';
+			}else{
+				$x['active']='false';
+			}
 			$device[]=$x;
+
 		}
 
 		$return = array(
@@ -120,8 +135,8 @@ if (post('tts')) {
 
 
 if (post('add_device')) {
-	$add_device_id = $_POST['socket_id'];
-	$device_name = $_POST['device_name'];
+	$add_device_id = softSan($_POST['socket_id']);
+	$device_name = softSan($_POST['device_name']);
 
 
 
@@ -146,21 +161,24 @@ if (post('add_device')) {
 
 }
 
+if (post('delete_device')) {
+	$delete_device_id = softSan(post('delete_device'));
+
+	$db->exec("DELETE FROM device_active WHERE device_id='$delete_device_id'");
+	$db->exec("DELETE FROM device_power_graph WHERE device_id='$delete_device_id'");
+	$db->exec("DELETE FROM device_summary WHERE device_id='$delete_device_id'");
+
+
+}
 
 
 
 
-if (post('toggle_state')) {
-	$device_id = post('toggle_state');
-	$curr_state = $db->query("SELECT state FROM device_summary WHERE device_id='$device_id'")->fetchArray(SQLITE3_ASSOC)['state'];
 
-	if ($curr_state==1) {
-		$db->exec("UPDATE device_summary SET state=0 WHERE device_id='$device_id'");
-	}else{
-		$db->exec("UPDATE device_summary SET state=1 WHERE device_id='$device_id'");
-	}
-
-	echo "toggled";
+if (post('toggle_id')) {
+	$device_id = post('toggle_id');
+	if (!$state = post('toggle_state')){$state = 0;}
+	$db->exec("UPDATE device_summary SET state=$state WHERE device_id='$device_id'");
 
 }
 
@@ -296,7 +314,7 @@ if(post('device_graph')){
 		<br>
 		<br>
 
-		<button disabled class="btn btn-sm btn-danger"><i class="bx bx-trash"></i> DELETE </button>
+		<button onclick="delete_socket('<?php echo $id;?>')" class="btn btn-sm btn-danger"><i class="bx bx-trash"></i> DELETE </button>
 		<?php
 
 

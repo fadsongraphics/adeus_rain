@@ -111,7 +111,12 @@ $styles = array(
 	'water heater'=>array('bg' => 'background-color: #EDCBF9; color: white;', 'color'=>'color: #a653c9;;', 'icon'=>'cooker-p.svg'),
 	'lights'=>array('bg' => 'background-color: #fff2ab; color: white;', 'color'=>'color: #FFAF47;', 'icon'=>'tg2.svg'),
 	'disabled'=>array('bg' => 'background-color: #D9D8DD; color: white;', 'color'=>'color: #333;', 'icon'=>''),
-)
+);
+
+
+// SET ACTIVE TIME
+$time = time();
+$time_buffer = $time - 10;
 
 
 
