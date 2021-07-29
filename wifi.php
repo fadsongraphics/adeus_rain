@@ -7,7 +7,18 @@ require_once "inc/conn.php";
 
 	$wifi_dongle = $hub_config->wifi_dongle;
 
-	$wifis = shell_exec("/sbin/iwlist $wifi_dongle scan | grep ESSID");
+	$wifi_text = shell_exec("/sbin/iwlist $wifi_dongle scan | grep ESSID");
+
+	$wifi_text = 'ESSID:"Stephen" ESSID:"Stephen"';
+	$wt1 = explode(' ', trim($wifi_text));
+	foreach($wt1 as $wt2){
+		$wt3 = explode("ESSID:", trim($wt2));
+		$wt = $wt3[1];
+		$wt = ltrim($wt, '"');
+		$wt = rtrim($wt, '"');
+		$wifis[] = $wt;
+	}
+
 
 	$iwconfig = shell_exec("/sbin/iwconfig");
 
@@ -27,16 +38,14 @@ require_once "inc/conn.php";
 	                <div class="main-card-custom shadow-sm p-3 mt-0">
 
 	                    <div class="row">
-wifis : <br>
-<?php 	print_r($wifis);?>
-<br>
-iwconfig : <br>
-<?php 	print_r($iwconfig);?>
+	                    	
 				                <div class="form-group">
 
 				                <h6 class="font-weight-bold">Wifi Name</h6>				                	
-				            	<select class="form-control">
-				            		<option value="a">a</option>
+				            	<select id="ssid" class="form-control">
+				            		<?php foreach ($wifis as $w) {?>
+				            		<option value="<?php echo $w;?>"><?php echo $w; ?></option>
+				            		<?php } ?>
 				            	</select>
 
 				                </div>
@@ -48,7 +57,7 @@ iwconfig : <br>
 					            <div class="form-group">
 					            		
 				                <h6 class="font-weight-bold">Password</h6>				                	
-				            	<input type="" class="form-control" placeholder="Leave Empty if blank">
+				            	<input type="" id="wifi_key" class="form-control" placeholder="Leave Empty if blank">
 
 					            </div>
 
@@ -70,6 +79,9 @@ iwconfig : <br>
 
     </div>
 
+    <div class="col-5">
+    	<?php echo file_get_contents("/var/www/wpa_supplicant.conf"); ?>
+    </div>
 </div>
 
 
@@ -80,3 +92,17 @@ iwconfig : <br>
 
 
 <div class="clearfix"></div>
+
+<script type="text/javascript">
+    var postLink = "inc/post.php";
+
+    function submitWifi(){
+    	var ssid = $("#ssid").val();
+    	var wifi_key = $("#wifi_key").val();
+
+        $.post(postLink, {submitWifi: 1, ssid: ssid, wifi_key: wifi_key}, function(res){
+            console.log(res);
+        });
+    }
+
+</script>
