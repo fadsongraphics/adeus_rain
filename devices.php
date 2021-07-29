@@ -31,7 +31,11 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
                             }
 
                             foreach ($devices_list as $d) {
-                                if ($d['device_name']=='unknown') {?>
+                                if ($d['device_name']=='unknown') {
+								$x_id = $d['device_id'];
+								$off_time = $db->query("SELECT off_time FROM device_active WHERE device_id='$x_id' ORDER BY id DESC LIMIT 0,1")->fetchArray(SQLITE3_ASSOC)['off_time'];
+								if (($off_time+60) > $time_buffer) {
+                                	?>
 
                                 <div class="col-6 p-0">
 
@@ -51,6 +55,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
                                 </div>
                                 <?php
+		                            }
                                 }else{
 									$d_id= $d['device_id'];
 									$last_active=$db->query("SELECT off_time FROM device_active WHERE device_id='$d_id'")->fetchArray()['off_time'];
@@ -575,7 +580,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 		  	<option value="lights">Lights</option>
 		  	<option value="pump">Pump</option>
 		  	<option value="kettle">Kettle</option>
-		  	<option value="televison">Television</option>
+		  	<option value="tv">TV</option>
 		  	<option value="microwave">Microwave</option>
 		  	<option value="ac">AC</option>
 		  	<option value="speakers">Speakers</option>

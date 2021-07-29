@@ -245,7 +245,11 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
                             }
 
                             foreach ($devices_list as $d) {
-                                if ($d['device_name']=='unknown') {?>
+                                if ($d['device_name']=='unknown') {
+								$x_id = $d['device_id'];
+								$off_time = $db->query("SELECT off_time FROM device_active WHERE device_id='$x_id' ORDER BY id DESC LIMIT 0,1")->fetchArray(SQLITE3_ASSOC)['off_time'];
+								if (($off_time+60) > $time_buffer) {
+									?>
 
                                 <div class="col-6 p-0" onclick="pager('devices.php', 'notifyNav')">
 
@@ -265,6 +269,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
                                 </div>
                                 <?php
+		                            }
                                 }else{
 									$d_id= $d['device_id'];
 									$last_active=$db->query("SELECT off_time FROM device_active WHERE device_id='$d_id'")->fetchArray()['off_time'];

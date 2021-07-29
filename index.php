@@ -17,7 +17,7 @@ if(get('page')){
 
 }else{
 
-	require_once "dashboard.php";
+	require_once "wifi.php";
 
 }
 

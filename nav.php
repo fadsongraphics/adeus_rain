@@ -204,7 +204,7 @@
 
 		    </div>
 
-    		<div class="search-icon" style="display: flex; justify-content: center; align-items: center;">
+    		<div onclick="pager('wifi.php', '#')" class="search-icon" style="display: flex; justify-content: center; align-items: center;">
     		    <span class="bx bx-wifi-off" style="font-size: 30px"></span>
     		</div>
     		<div class="search-icon" style="display: flex; justify-content: center; align-items: center;" onclick="pager('dashboard.php', 'dashboardNav')">
