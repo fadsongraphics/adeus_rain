@@ -2,6 +2,18 @@
 require_once "conn.php";
 
 
+if(get('get_meter_total')){
+	$meter_id = get('get_meter_total').'_energy_total';
+	$gmt = $db->query("SELECT value FROM meta_data WHERE meta='$meter_id'");
+	if ($value = $gmt->fetchArray(SQLITE3_ASSOC)) {
+		echo $value['value'];
+	}else{
+		$gmt = $db->query("INSERT INTO meta_data(meta, value) VALUES ('$meter_id', 1000)");
+		echo 0;
+	}
+}
+
+
 if(get('meter_id')){
 
 	$meter_id = softSan(get('meter_id'));
@@ -47,6 +59,13 @@ if(get('meter_id')){
 			}
 
 }
+
+
+
+
+
+// %%%%%%%%%%%%%%%%%%%%%%
+
 
 
 if (get('action')) {
