@@ -3,7 +3,7 @@
 
 	set_time_limit(30);
 
-	require_once "../inc/conn.php";
+	// require_once "../inc/conn.php";
 
 
 	$device_summary_query = $db->query("SELECT * FROM device_summary");
@@ -12,7 +12,7 @@
         $device_summary[] = $y;
     }
 
-    echo '<pre>';
+    // echo '<pre>';
     $index = 0;
 
     foreach ($device_summary as $d) {
@@ -75,7 +75,7 @@
 	$context  = stream_context_create( $options );
 	$result = file_get_contents( $url, false, $context );
 
-	print_r($result);
+	// print_r($result);
 
 
 	// $decrypted_message = openssl_decrypt(base64_decode($payload), $method, $hub_key, 0, $iv);

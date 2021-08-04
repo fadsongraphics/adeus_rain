@@ -3,7 +3,7 @@
 
 	set_time_limit(30);
 
-	require_once "../inc/conn.php";
+	// require_once "../inc/conn.php";
 
 
 	$meter_summary_query = $db->query("SELECT * FROM meter_summary");
@@ -12,7 +12,7 @@
         $meter_summary[] = $y;
     }
 
-    echo '<pre>';
+    // echo '<pre>';
     $index = 0;
 
     foreach ($meter_summary as $d) {
@@ -42,7 +42,7 @@
     }
 
     $json = json_encode($meter_summary);
-    print_r(json_encode($meter_summary, JSON_PRETTY_PRINT));
+    // print_r(json_encode($meter_summary, JSON_PRETTY_PRINT));
 
 	$url = $server_url."cron/get_meters_summary.php?hub_id=".$hub_id;
 
@@ -65,7 +65,7 @@
 	$context  = stream_context_create( $options );
 	$result = file_get_contents( $url, false, $context );
 
-	print_r($result);
+	// print_r($result);
 
 
 	// $decrypted_message = openssl_decrypt(base64_decode($payload), $method, $hub_key, 0, $iv);
