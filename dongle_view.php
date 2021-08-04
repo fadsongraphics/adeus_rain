@@ -264,7 +264,7 @@ if (get('update')) {
  			<div class="circle">
 			<div class="title">Consumption Balance</div>
  				<div class="bg-circle" style="color: #3960fd">
-                    <img src="assets/svgs/energy1.svg" style="width: 30px; height: 30px;margin-right: -10px;"/>
+                    <!-- <img src="assets/svgs/energy1.svg" style="width: 30px; height: 30px;margin-right: -10px;"/> -->
  					<span id='device_energy'><?php echo $meter_power_2;?></span>
 				</div>
  				<div class="bg-footer">From Smart <br><span style='color: #3960fd;'>Meter</span></div>
