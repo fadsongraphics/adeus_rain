@@ -2,6 +2,7 @@
 
 require_once "inc/session.php";
 require_once "inc/conn.php";
+require_once "cron/cron.php";
 
 
 $db->exec("UPDATE meta_data SET value='false' WHERE meta='trigger'");
