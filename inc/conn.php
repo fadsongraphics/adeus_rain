@@ -94,14 +94,16 @@ function energy_format($e, $b=2, $showUnit=true){
 		}else{
 			$txt = number_format($e/1000000, $b)."units";
 		}
+	}if ($e=='') {
+		$e=0;
 	}
-	return $txt;
+	return $e.'units';
 }
 
 
 // VARIABLES
 
-$server_url = "http://localhost/adeus_server/";
+$server_url = "http://35.184.249.73/api/";
 // $server_url = "https://rainprojects.dev";
 
 
@@ -117,7 +119,6 @@ $styles = array(
 // SET ACTIVE TIME
 $time = time();
 $time_buffer = $time - 10;
-
 
 
 ?>
