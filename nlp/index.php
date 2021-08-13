@@ -37,9 +37,9 @@ if (get('key')) {
 		if ($curr_assoc=$curr_query->fetchArray(SQLITE3_ASSOC)) {
 			$curr_state=$curr_assoc['state'];
 			if ($curr_state==1) {
-				$answer['response'] = "off";
-			}else if($curr_state==0){
 				$answer['response'] = "on";
+			}else if($curr_state==0){
+				$answer['response'] = "off";
 			}
 
 		}else{
@@ -68,7 +68,7 @@ if (get('key')) {
 				
 				$energy = $db->query($sql)->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'];
 
-				$answer['response'] = number_format($energy, 1)." watt hours";
+				$answer['response'] = $energy/100;
 				
 			}else{
 				$answer['status']=0;
@@ -80,7 +80,7 @@ if (get('key')) {
 
 				$energy = $db->query($sql)->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'];
 
-				$answer['response'] = number_format($energy, 1)." watt hours";
+				$answer['response'] = $energy/1000;
 		}
 
 
@@ -88,13 +88,15 @@ if (get('key')) {
 
 	if (get('get_balance')) {
 		$answer['status'] = 0;
-		$answer['response'] = " unable to be retrieved right now";
+		// $answer['response'] = " unable to be retrieved right now";
+		$answer['response'] = "0";
 	}
 
 
 	if (get('get_balance')) {
 		$answer['status'] = 0;
-		$answer['response'] = " unable to be retrieved right now";
+		// $answer['response'] = " unable to be retrieved right now";
+		$answer['response'] = "0";
 	}
 
 	header('Content-Type: application/json');
