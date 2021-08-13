@@ -65,7 +65,7 @@ if (get('update')) {
  <style type="text/css">
  	body{
  		margin: auto;
- 		background: pink url('assets/images/dongle_bg.png') center no-repeat;
+ 		background: yellow url('assets/images/dongle_bg.png') center no-repeat;
  		background-size: cover;
 		background-attachment:fixed;
 		overflow: hidden;
