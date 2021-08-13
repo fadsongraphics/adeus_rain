@@ -283,7 +283,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
 		                    <div class="mt-3">
 		                        <span style="font-size: 18px;">Today</span><br/>
-		                        <h6 style="font-weight: 900; font-size: 24px" class="mb-0" id="devicesSM"><?php echo $energy_consumed; ?></h6>
+		                        <h6 style="font-weight: 900; font-size: 24px" class="mb-0" id="devicesSM"><?php echo $energy_consumed/1000; ?></h6>
 		                    </div>
 
 
