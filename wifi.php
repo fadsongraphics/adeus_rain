@@ -7,7 +7,7 @@ require_once "inc/conn.php";
 
 	$wifi_dongle = $hub_config->wifi_dongle;
 
-	$wifi_text = shell_exec("/sbin/iwlist $wifi_dongle scan | grep ESSID");
+	$wifi_text = shell_exec("iwlist $wifi_dongle scan | grep ESSID");
 
 	$wt1 = explode(' ', trim($wifi_text));
 	foreach($wt1 as $wt2){
@@ -81,7 +81,7 @@ require_once "inc/conn.php";
     </div>
 
     <div class="col-5">
-    	<?php echo file_get_contents("/var/www/wpa_supplicant.conf"); ?>
+    	<?php // echo file_get_contents("/var/www/wpa_supplicant.conf"); ?>
     </div>
 </div>
 
