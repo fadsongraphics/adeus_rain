@@ -26,9 +26,9 @@ if (get('update')) {
 	echo ("Updating... <br>...<br>...<br>");
 
 	echo ("Getting files from server...<br>");
-	if(exec("sudo git reset --hard")){
+	if(exec("git reset --hard")){
 
-		if(exec("sudo git pull")){
+		if(exec("git pull")){
 
 			echo ("Successful. Rebooting in 5 seconds...<br>");
 
