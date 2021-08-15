@@ -28,31 +28,7 @@ soundObjhundred = pygame.mixer.Sound ('hundreda.wav')
 soundObjmillion = pygame.mixer.Sound('milliona.wav')
 soundObjthousand = pygame.mixer.Sound('thousanda.wav')
 soundObjbillion = pygame.mixer.Sound('billiona.wav')
-soundObjfridge = pygame.mixer.Sound('fridge.wav')
-soundObjtv = pygame.mixer.Sound('tv.wav')
-soundObjtelevision = pygame.mixer.Sound('television.wav')
-soundObjac = pygame.mixer.Sound('ac.wav')
-soundObjair_conditioner = pygame.mixer.Sound('air conditioner.wav')
-soundObjpump = pygame.mixer.Sound('pump.wav')
-soundObjwashing_machine = pygame.mixer.Sound('washing machine.wav')
-soundObjdryer = pygame.mixer.Sound('dryer.wav')
-#soundObjcooking_oven = pygame.mixer.Sound('oven.wav')
-soundObjfreezer = pygame.mixer.Sound('freezer.wav')
-soundObjmicrowave = pygame.mixer.Sound('microwave.wav')
-soundObjev = pygame.mixer.Sound('ev.wav')
-soundObjprinter = pygame.mixer.Sound('printer.wav')
-soundObjbulb = pygame.mixer.Sound('bulb.wav')
-
-#soundObjwater_pump = pygame.mixer.Sound('water pump.wav')
-soundObjheater = pygame.mixer.Sound('heater.wav')
-soundObjcooker = pygame.mixer.Sound('cooker.wav')
-soundObjkettle = pygame.mixer.Sound('kettle.wav')
-soundObjlight = pygame.mixer.Sound('light.wav')
-soundObjspeaker = pygame.mixer.Sound('speaker.wav')
-soundObjrefridgerator = pygame.mixer.Sound('refridgerator.wav')
-soundObjfan = pygame.mixer.Sound('fan.wav')
 soundObjand = pygame.mixer.Sound('&a.wav')
-soundObj0a = pygame.mixer.Sound('0a.wav')
 soundObj1a = pygame.mixer.Sound('1a.wav')
 soundObj2a = pygame.mixer.Sound('2a.wav')
 soundObj3a = pygame.mixer.Sound('3a.wav')
@@ -128,8 +104,8 @@ soundObjrun = pygame.mixer.Sound('run.wav')
 
 df = pd.read_csv('Intents.csv', header = None, names = ['Examples', 'Intent'])
 device = []
-appliances= ['fridge', 'tv', 'television', 'ac','air conditioner','pump','washing machine','dryer','cooking oven','freezer', 'microwave','ev','printer',
-              'bulb','water pump','heater','cooker','kettle','light','speaker','refridgerator','fan']
+appliances= ['fridge', 'tv', 'television', 'ac','air conditioner','pump','waterpump',
+              'bulb','water pump','heater','microwave','cooker','kettle','electric kettle','light','speaker','refridgerator','fan']
 currencies = ['dollars', 'pounds', 'euros', 'naira', 'yuan', 'canadian dollars', 'canadian dollar', 'australian dollars', 'australian dollar',
               'dollar','pound' , 'euro']
 times = ['today', 'yesterday', 'last week', 'last month', 'a month ago', 'two days ago', 'two months ago', 'three days ago', 'one month', 'one day']
@@ -184,16 +160,12 @@ def intent2action(intent):
         web_res  = requests.get(address).json() 
         response =  web_res['response']
         if web_res['status']==0:
-            text+= f'{response}'
+            text+= f'.{response}.'
         else:#get status from db
           soundObj21.play()
           time.sleep(2)
           
-          #text += f'{d}'
-          # dev = 'soundObj'+ d 
-          # print(dev)
-          pygame.mixer.Sound( d+ '.wav').play()
-          time.sleep(1)
+          text += f'{d}'
 
           soundObj22.play()
           time.sleep(2)
@@ -214,28 +186,24 @@ def intent2action(intent):
         usage = web_res['response']
 
         soundObj21.play()
-        time.sleep(1)
+        time.sleep(2)
 
-        #text += f'{d}'
-        dev = 'soundObj'+ d
-        print(dev)
-        pygame.mixer.Sound( d+ '.wav').play()
-        time.sleep(1)
+        text += f'{d}'
 
         soundObj23.play()
-        time.sleep(1)
+        time.sleep(2)
 
         text += f'{period}'
 
         soundObj24.play()
-        time.sleep(1)
+        time.sleep(2)
 
         #text += f'.{usage}.'
-        sayeed (float (usage))
-        time.sleep(1)
+        sayeed (usage)
+        time.sleep(2)
 
         soundObj25.play()
-        time.sleep(1)
+        time.sleep(2)
 
 
     elif device:
@@ -244,69 +212,48 @@ def intent2action(intent):
       web_res = requests.get(address).json()
       usage = web_res['response']
 
-
       soundObj39.play()
-      time.sleep(1)
+      time.sleep(2)
 
       #text += f'.{usage}.'
-      sayeed (float (usage))
-      time.sleep(1)
+      sayeed (usage)
+      time.sleep(2)
 
     else:
       soundObj1.play()
-      time.sleep(1)
-  elif intent == 'current_power':
-        
-        address = fr"http://localhost/nlp?key=passkey&current_power=1"
-        address = address.replace(' ', '%20')
-        web_res = requests.get(address).json()
-        current_power = web_res['response']
-        
-  elif intent == 'energy_ever_bought':
-        address = fr"http://localhost/nlp?key=passkey&energy_ever_bought=1"
-        address = address.replace(' ', '%20')
-        web_res = requests.get(address).json()
-        energy_ever_bought = web_res['response']
-        
-
-  elif intent == 'Turn_off_device':
-    if device:
-      for d in device:
-        address = fr"http://localhost/nlp?key=passkey&device={d}&turn_off=1"
-        address = address.replace(' ', '%20')
-        web_res = requests.post(address).json()
-
-        soundObj26.play()
-        time.sleep(2)
-
-        #text += f'{d}'
-        dev = 'soundObj'+ d
-        print(dev)
-        pygame.mixer.Sound( d + '.wav').play()
-        time.sleep(1)
-
-    else:
-      soundObj2.play()
       time.sleep(2)
+        
 
-  elif intent == 'Turn_on_device':
-    if device:
-      for d in device:
-        address = fr"http://localhost/nlp?key=passkey&device={d}&turn_on=1"
-        address = address.replace(' ', '%20')
-        web_res= requests.post(address).json()
+#   elif intent == 'Turn_off_device':
+#     if device:
+#       for d in device:
+#         address = fr"http://localhost/nlp?key=passkey&device={d}&turn_off=1"
+#         address = address.replace(' ', '%20')
+#         web_res = requests.post(address).json()
 
-        soundObj27.play()
-        time.sleep(2)
+#         soundObj26.play()
+#         time.sleep(2)
 
-        #text += f'{d}'
-        dev = 'soundObj'+ d
-        print(dev)
-        pygame.mixer.Sound( d+ '.wav').play()
-        time.sleep(1)
-    else:
-      soundObj3.play()
-      time.sleep(2)
+#         text += f'{d}.'
+
+#     else:
+#       soundObj2.play()
+#       time.sleep(2)
+
+#   elif intent == 'Turn_on_device':
+#     if device:
+#       for d in device:
+#         address = fr"http://localhost/nlp?key=passkey&device={d}&turn_on=1"
+#         address = address.replace(' ', '%20')
+#         web_res= requests.post(address).json()
+
+#         soundObj27.play()
+#         time.sleep(2)
+
+#         text += f'.{d}.'
+#     else:
+#       soundObj3.play()
+#       time.sleep(2)
 
   elif intent == 'Utilities_Energy_Balance':
       address = fr"http://localhost/nlp?key=passkey&get_balance=1"
@@ -321,10 +268,10 @@ def intent2action(intent):
       #print(balance)
       #print(balance*2)
       sayeed (float(balance))
-      time.sleep(1)
+      time.sleep(2)
 
       soundObj25.play()
-      time.sleep(0.5)
+      time.sleep(2)
 
   elif intent == 'Utilities_energy_price':
       address = fr"http://localhost/nlp?key=passkey&get_price=1"
@@ -341,7 +288,7 @@ def intent2action(intent):
         soundObj30.play()
         time.sleep(2)
 
-        text+= f'{quantity[0]} {currency[0]}'
+        text+= f'.{quantity[0]} {currency[0]}.'
 
       elif quantity:
         price = price * quantity[0]
@@ -349,12 +296,12 @@ def intent2action(intent):
         soundObj31.play()
         time.sleep(2)
 
-        text += f'{quantity[0]}'
+        text += f'.{quantity[0]}.'
 
         soundObj32.play()
         time.sleep(2)
 
-        text += f'{price}'
+        text += f'.{price}.'
 
 
       else:
@@ -362,7 +309,7 @@ def intent2action(intent):
         soundObj33.play()
         time.sleep(2)
 
-        text += f'{price}'
+        text += f'.{price}.'
 
   elif intent == 'Utilities_Recharge_Account':
     if quantity and currency:
@@ -406,17 +353,14 @@ def intent2action(intent):
       time.sleep(2)
      
       #text += f'{usage}'
-      print (usage)
-      sayeed (float (usage))
+      sayeed (usage)
       time.sleep(2)
 
-      soundObj25.play()
-      time.sleep(2)
+      
 
 
 
     else:
-          
       address = fr"http://localhost/nlp?key=passkey&get_energy=1&period=today"
       address = address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
@@ -427,11 +371,8 @@ def intent2action(intent):
 
     
       #text += f"{usage}"
-      print (usage)
-      sayeed (float (usage))
+      sayeed (usage)
       time.sleep(2)
-      soundObj25.play()
-      
 
   # elif intent == 'Age':
   #   filename = '5.wav'
@@ -445,7 +386,7 @@ def intent2action(intent):
     soundObj6.play()
     time.sleep(2)
     t="Sure how can I be of help?"
-    
+    not_done_with_Q= False
     soundObja.play()
 
   elif intent == 'Bored':
@@ -543,7 +484,7 @@ def intent2action(intent):
     # text+= f"{d2}" 
     today = datetime.now()
     stephen ()
-    time.sleep(0.5)
+    time.sleep(23)
     not_done_with_Q= False
     soundObja.play()
 
@@ -634,13 +575,7 @@ def stoplistening ():
 
 
 def sayeed (num):
-    td=0.1
-
-    if num==0:
-          
-         soundObj0a.play()
-         time.sleep (td)
-
+    td=0.5
 
     if num < 0:
         soundObjnegative.play()
@@ -740,7 +675,7 @@ def sayeed (num):
 
     if x >= 1:
         n = math.floor(x)
-        x = round(x-n,3)
+        x = math.floor(x-n,3)
 
         if n == 19:
             soundObj19a.play()
@@ -1009,8 +944,6 @@ try:
                                 print (jres['text'])    
                            
                                 if jres['text'] != '':
-                                  jres['text'].replace ('fun','fan')
-                                  jres['text'].replace ('reason','freezer')
                                   finaltext= wordtodigits.convert((jres["text"]))
                                   user_intent = get_intent(finaltext)
                                   print("Intent: " + user_intent)
@@ -1108,14 +1041,24 @@ try:
                                       q.queue.clear()
                                       address = fr"http://localhost/nlp?trigger=false"
                                       requests.get(address)
-                                
                                       not_done_with_Q= False
+                                
+                                      
                                       #filename = 'bbm_tone.wav'
                                       #data, fs = sf.read(filename, dtype='float32')
                                       # sd.play(data, fs)
                                       #status = sd.wait()
                                       
                             
+
+
+
+
+
+
+
+
+
                             if ("thank you" in jres["text"]) or ("bye" in jres["text"]):
                                 address = fr"http://localhost/nlp?trigger=false"
                                 requests.get(address)
