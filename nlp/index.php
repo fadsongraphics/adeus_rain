@@ -90,6 +90,9 @@ if (get('key')) {
 		$answer['status'] = 0;
 		// $answer['response'] = " unable to be retrieved right now";
 		$answer['response'] = $db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'")->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'];
+		if($answer['response']=='' or $answer['response']==null){
+			$answer['response']="0";
+		}
 	}
 
 
