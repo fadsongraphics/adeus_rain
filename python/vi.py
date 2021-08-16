@@ -258,7 +258,7 @@ def intent2action(intent):
       time.sleep(1)
   elif intent == 'current_power':
         
-        address = fr"http://localhost/nlp?get_power=1"
+        address = fr"http://localhost/nlp?key=passkey&get_power=1"
         address = address.replace(' ', '%20')
         web_res = requests.get(address).json()
         current_power = web_res['response']
@@ -269,7 +269,7 @@ def intent2action(intent):
         soundObjkwg.play()
 
   elif intent == 'energy_ever_bought':
-        address = fr"http://localhost/nlp?get_eeb=1"
+        address = fr"http://localhost/nlp?key=passkey&get_eeb=1"
         address = address.replace(' ', '%20')
         web_res = requests.get(address).json()
         energy_ever_bought = web_res['response']

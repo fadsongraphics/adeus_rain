@@ -95,6 +95,24 @@ if (get('key')) {
 		}
 	}
 
+	if (get('get_power')) {
+		$answer['status'] = 0;
+		// $answer['response'] = " unable to be retrieved right now";
+		$answer['response'] = $db->query("SELECT SUM(current_power) FROM meter_summary WHERE meter_type='C'")->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'];
+		if($answer['response']=='' or $answer['response']==null){
+			$answer['response']="0";
+		}
+	}
+
+	if (get('get_eeb')) {
+		$answer['status'] = 0;
+		// $answer['response'] = " unable to be retrieved right now";
+		$answer['response'] = $db->query("SELECT SUM(total_energy) FROM meter_summary WHERE meter_type='C'")->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'];
+		if($answer['response']=='' or $answer['response']==null){
+			$answer['response']="0";
+		}
+	}
+
 
 	header('Content-Type: application/json');
 	echo json_encode($answer);
