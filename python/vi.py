@@ -117,9 +117,10 @@ soundObj39 = pygame.mixer.Sound('39.wav')
 soundObja = pygame.mixer.Sound('bbm_tone.wav')
 soundObjb = pygame.mixer.Sound('Pipes.wav')
 soundObjrun = pygame.mixer.Sound('run.wav')
-
-
-
+soundObjpull = pygame.mixer.Sound('pull.wav')
+soundObjkwg = pygame.mixer.Sound('kwg.wav')
+soundObjeeb = pygame.mixer.Sound('eeb.wav')
+soundObjunit = pygame.mixer.Sound('unit.wav')
 
 
 
@@ -257,16 +258,33 @@ def intent2action(intent):
       time.sleep(1)
   elif intent == 'current_power':
         
-        address = fr"http://localhost/nlp?key=passkey&current_power=1"
+        address = fr"http://localhost/nlp?get_power=1"
         address = address.replace(' ', '%20')
         web_res = requests.get(address).json()
         current_power = web_res['response']
-        
+        soundObjpull.play()
+        time.sleep(2)
+        sayeed (current_power)
+        time.sleep(2)
+        soundObjkwg.play()
+
   elif intent == 'energy_ever_bought':
-        address = fr"http://localhost/nlp?key=passkey&energy_ever_bought=1"
+        address = fr"http://localhost/nlp?get_eeb=1"
         address = address.replace(' ', '%20')
         web_res = requests.get(address).json()
         energy_ever_bought = web_res['response']
+        soundObjeeb.play()
+        time.sleep(2)
+        sayeed (energy_ever_bought)
+        time.sleep(2)
+        soundObjunit.play()
+
+
+
+
+
+
+
         
 
   elif intent == 'Turn_off_device':
@@ -634,7 +652,7 @@ def stoplistening ():
 
 
 def sayeed (num):
-    td=0.1
+    td=0.5
 
     if num==0:
           
@@ -967,7 +985,23 @@ try:
             print('#' * 80)
 
             rec = vosk.KaldiRecognizer(model, args.samplerate)
+            juststarting = True
             while True:
+                if juststarting:
+                      
+                      pygame.mixer.Sound('intro1.wav').play()
+                      time.sleep (9)
+                      address = fr"http://localhost/nlp?key=passkey&get_balance=1"
+                      address = address.replace(' ', '%20')
+                      web_res = requests.get(address).json()
+                      balance = web_res['response']
+                      sayeed(float(balance))
+                      time.sleep(1)
+                      soundObj25.play()
+                      time.sleep(1)
+                      pygame.mixer.Sound('intro2.wav').play()
+                      time.sleep (8)
+                      juststarting = False
                 data = q.get()
                 if rec.AcceptWaveform(data):
                     jres = json.loads((rec.Result()))

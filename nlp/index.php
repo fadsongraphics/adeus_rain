@@ -89,15 +89,9 @@ if (get('key')) {
 	if (get('get_balance')) {
 		$answer['status'] = 0;
 		// $answer['response'] = " unable to be retrieved right now";
-		$answer['response'] = "0";
+		$answer['response'] = $db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'")->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'];
 	}
 
-
-	if (get('get_balance')) {
-		$answer['status'] = 0;
-		// $answer['response'] = " unable to be retrieved right now";
-		$answer['response'] = "0";
-	}
 
 	header('Content-Type: application/json');
 	echo json_encode($answer);
