@@ -252,9 +252,9 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
 		            </div>
 
-		            <!-- <button class="btn btn-primary rounded-circle pos-center-bottom" style="width: 50px; height: 50px; padding: 0px; font-size: 45px; display: flex; align-items: center; justify-content: center;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">
+		            <button class="btn btn-primary rounded-circle pos-center-bottom" style="width: 50px; height: 50px; padding: 0px; font-size: 45px; display: flex; align-items: center; justify-content: center;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">
 		                +
-		            </button> -->
+		            </button>
 
 		        </div>
 
@@ -570,20 +570,16 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 
 	    <div class="mb-3">
 		  <label for="exampleFormControlInput1" class="form-label">Device Name</label>
-		  <select id="device_name" class="form-control">
+		  <select id="device_name" class="form-control" style="text-transform:capitalize;">
 		  	<option>Select</option>
-		  	<option value="fan">Fan</option>
-		  	<option value="cooker">Cooker</option>
-		  	<option value="fridge">Fridge</option>
-		  	<option value="freezer">Freezer</option>
-		  	<option value="water heater">Water Heater</option>
-		  	<option value="lights">Lights</option>
-		  	<option value="pump">Pump</option>
-		  	<option value="kettle">Kettle</option>
-		  	<option value="tv">TV</option>
-		  	<option value="microwave">Microwave</option>
-		  	<option value="ac">AC</option>
-		  	<option value="speakers">Speakers</option>
+			  <?php $errr = array('fridge', 'tv', 'television', 'ac','air conditioner','pump','washing machine','dryer','cooking oven','freezer', 'microwave','ev','printer',
+              'bulb','water pump','heater','cooker','kettle','light','speaker','refrigerator','fan');
+
+			  foreach ($errr as $e){
+
+			  ?>
+		  	<option value="<?php echo $e;?>"><?php echo $e;?></option>
+			<?php }?>
 		  </select>
 		</div>
 

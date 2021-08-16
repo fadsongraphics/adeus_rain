@@ -130,7 +130,7 @@ soundObjunit = pygame.mixer.Sound('unit.wav')
 df = pd.read_csv('Intents.csv', header = None, names = ['Examples', 'Intent'])
 device = []
 appliances= ['fridge', 'tv', 'television', 'ac','air conditioner','pump','washing machine','dryer','cooking oven','freezer', 'microwave','ev','printer',
-              'bulb','water pump','heater','cooker','kettle','light','speaker','refridgerator','fan']
+              'bulb','water pump','heater','cooker','kettle','light','speaker','refrigerator','fan']
 currencies = ['dollars', 'pounds', 'euros', 'naira', 'yuan', 'canadian dollars', 'canadian dollar', 'australian dollars', 'australian dollar',
               'dollar','pound' , 'euro']
 times = ['today', 'yesterday', 'last week', 'last month', 'a month ago', 'two days ago', 'two months ago', 'three days ago', 'one month', 'one day']
