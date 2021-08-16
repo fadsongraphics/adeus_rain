@@ -427,3 +427,9 @@ What is my energy consumption rate ,Utilities_View_Usage
 which country is the best,Nigeria
 best country,Nigeria
 where were you born,Nigeria
+how much current power,current_power
+how much load ,current_power
+how much current ,current_power
+hope I'm not underloading,current_power
+hope I'm not overloading,current_power
+how much energy have I ever bought,energy_ever_bought
