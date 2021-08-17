@@ -1,6 +1,7 @@
 <?php 
 
-require_once "inc/session.php";
+session_start();
+
 require_once "inc/conn.php";
 require_once "cron/cron.php";
 
@@ -13,37 +14,47 @@ $meter_power = energy_format(($db->query("SELECT SUM(total_power) FROM meter_sum
 $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_summary WHERE meter_type='C'"))->fetchArray(SQLITE3_ASSOC)['SUM(total_power)'], 2);
 
 
+if (isset($_SESSION['exec']) and !empty($_SESSION['exec'])) {
+	if (get('sess')==$_SESSION['exec']) {
 
-if (get('shutdown')) {
-	exec("sudo shutdown now");
-}
-
-if (get('restart')) {
-	exec("sudo reboot");
-}
-
-if (get('update')) {
-	echo ("Updating... <br>...<br>...<br>");
-
-	echo ("Getting files from server...<br>");
-	if(exec("git reset --hard")){
-
-		if(exec("git pull")){
-
-			echo ("Successful. Rebooting in 5 seconds...<br>");
-
-			echo "<meta http-equiv='refresh'  content='5,url=?restart=1'>";
-			exit();
-
-		}else{
-			echo "<meta http-equiv='refresh' content='10, ?=null'> ";
-			die("Could not retrieve files");
+		if (get('shutdown')) {
+			exec("sudo shutdown now");
 		}
-	}else{
-		  echo "<meta http-equiv='refresh' content='10, ?=null'> ";
-		die("Could not reset git <br> Reloading page...");
+
+		if (get('restart')) {
+			exec("sudo reboot");
+		}
+
+		if (get('update')) {
+			echo ("Updating... <br>...<br>...<br>");
+
+			echo ("Getting files from server...<br>");
+			if(exec("git reset --hard")){
+
+				if(exec("git pull")){
+
+					echo ("Successful. Rebooting in 5 seconds...<br>");
+
+					echo "<meta http-equiv='refresh'  content='5,url=?restart=1'>";
+					exit();
+
+				}else{
+					echo "<meta http-equiv='refresh' content='10, ?=null'> ";
+					die("Could not retrieve files");
+				}
+			}else{
+				  echo "<meta http-equiv='refresh' content='10, ?=null'> ";
+				die("Could not reset git <br> Reloading page...");
+			}
+		}
+
 	}
 }
+
+
+
+$_SESSION['exec'] = uniqid();
+
 
 
 ?>
@@ -241,9 +252,9 @@ if (get('update')) {
  		</div>	
 
  		<div class="nav2">
- 			<a href="?shutdown=1"><div class="shutdown"><i class='bx bx-power-off'></i></div></a>
- 			<a href="?restart=1"><div class="restart"><i class='bx bx-refresh' ></i></div></a>
- 			<a href="?update=1" onclick="document.getElementById('body').innerHTML =''; "><div class="update"><i class='bx bx-download'></i></div></a>
+ 			<a href="?shutdown=1&sess=<?php echo $_SESSION['exec'];?>"><div class="shutdown"><i class='bx bx-power-off'></i></div></a>
+ 			<a href="?restart=1&sess=<?php echo $_SESSION['exec'];?>"><div class="restart"><i class='bx bx-refresh' ></i></div></a>
+ 			<a href="?update=1&sess=<?php echo $_SESSION['exec'];?>" onclick="document.getElementById('body').innerHTML =''; "><div class="update"><i class='bx bx-download'></i></div></a>
  			<div style="clear: both"></div>
  		</div>
 
