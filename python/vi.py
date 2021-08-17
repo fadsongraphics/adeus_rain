@@ -180,7 +180,7 @@ def intent2action(intent):
       for d in device:
         
         
-        address= fr"http://localhost/nlp?key=passkey&device={d}&get_state=1"
+        address= fr"http://localhost/hub/nlp?key=passkey&device={d}&get_state=1"
         address = address.replace(' ', '%20')
         web_res  = requests.get(address).json() 
         response =  web_res['response']
@@ -208,7 +208,7 @@ def intent2action(intent):
 
     if device and period:
       for d in device:
-        address = fr"http://localhost/nlp?key=passkey&device={d}&get_energy=1&period={period}"
+        address = fr"http://localhost/hub/nlp?key=passkey&device={d}&get_energy=1&period={period}"
         address = address.replace(' ', '%20')
         
         web_res = requests.get(address).json()
@@ -240,7 +240,7 @@ def intent2action(intent):
 
 
     elif device:
-      address = fr"http://localhost/nlp?key=passkey&device={d}&get_energy=1&period=today"
+      address = fr"http://localhost/hub/nlp?key=passkey&device={d}&get_energy=1&period=today"
       address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       usage = web_res['response']
@@ -258,24 +258,24 @@ def intent2action(intent):
       time.sleep(1)
   elif intent == 'current_power':
         
-        address = fr"http://localhost/nlp?key=passkey&get_power=1"
+        address = fr"http://localhost/hub/nlp?key=passkey&get_power=1"
         address = address.replace(' ', '%20')
         web_res = requests.get(address).json()
         current_power = web_res['response']
         soundObjpull.play()
         time.sleep(2)
-        sayeed (current_power)
+        sayeed (float(current_power))
         time.sleep(2)
         soundObjkwg.play()
 
   elif intent == 'energy_ever_bought':
-        address = fr"http://localhost/nlp?key=passkey&get_eeb=1"
+        address = fr"http://localhost/hub/nlp?key=passkey&get_eeb=1"
         address = address.replace(' ', '%20')
         web_res = requests.get(address).json()
         energy_ever_bought = web_res['response']
         soundObjeeb.play()
         time.sleep(2)
-        sayeed (energy_ever_bought)
+        sayeed (float(energy_ever_bought))
         time.sleep(2)
         soundObjunit.play()
 
@@ -290,7 +290,7 @@ def intent2action(intent):
   elif intent == 'Turn_off_device':
     if device:
       for d in device:
-        address = fr"http://localhost/nlp?key=passkey&device={d}&turn_off=1"
+        address = fr"http://localhost/hub/nlp?key=passkey&device={d}&turn_off=1"
         address = address.replace(' ', '%20')
         web_res = requests.post(address).json()
 
@@ -310,7 +310,7 @@ def intent2action(intent):
   elif intent == 'Turn_on_device':
     if device:
       for d in device:
-        address = fr"http://localhost/nlp?key=passkey&device={d}&turn_on=1"
+        address = fr"http://localhost/hub/nlp?key=passkey&device={d}&turn_on=1"
         address = address.replace(' ', '%20')
         web_res= requests.post(address).json()
 
@@ -327,7 +327,7 @@ def intent2action(intent):
       time.sleep(2)
 
   elif intent == 'Utilities_Energy_Balance':
-      address = fr"http://localhost/nlp?key=passkey&get_balance=1"
+      address = fr"http://localhost/hub/nlp?key=passkey&get_balance=1"
       address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       balance = web_res['response']
@@ -345,7 +345,7 @@ def intent2action(intent):
       time.sleep(0.5)
 
   elif intent == 'Utilities_energy_price':
-      address = fr"http://localhost/nlp?key=passkey&get_price=1"
+      address = fr"http://localhost/hub/nlp?key=passkey&get_price=1"
       address = address.replace(' ', '%20')
       web_res= requests.get(address).json()
       price = web_res['response'] 
@@ -408,7 +408,7 @@ def intent2action(intent):
 
   elif intent == 'Utilities_View_Usage':
     if period:
-      address = fr"http://localhost/nlp?key=passkey&get_energy=1&period={period}"
+      address = fr"http://localhost/hub/nlp?key=passkey&get_energy=1&period={period}"
       address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       usage = web_res['response']
@@ -435,7 +435,7 @@ def intent2action(intent):
 
     else:
           
-      address = fr"http://localhost/nlp?key=passkey&get_energy=1&period=today"
+      address = fr"http://localhost/hub/nlp?key=passkey&get_energy=1&period=today"
       address = address = address.replace(' ', '%20')
       web_res = requests.get(address).json()
       usage = web_res['response']
@@ -991,7 +991,7 @@ try:
                       
                       pygame.mixer.Sound('intro1.wav').play()
                       time.sleep (9)
-                      address = fr"http://localhost/nlp?key=passkey&get_balance=1"
+                      address = fr"http://localhost/hub/nlp?key=passkey&get_balance=1"
                       address = address.replace(' ', '%20')
                       web_res = requests.get(address).json()
                       balance = web_res['response']
@@ -1008,7 +1008,7 @@ try:
                     print (jres['text']) 
                     
                     if ("hello vivian" in jres["text"]) or ("hello" in jres["text"]) or ("vivian" in jres["text"]):
-                        address = fr"http://localhost/nlp?trigger=true"
+                        address = fr"http://localhost/hub/nlp?trigger=true"
                         requests.get(address)
                         
                         # filename = 'Beginning.wav'
@@ -1140,7 +1140,7 @@ try:
                                   else:
                                       speakword(adeus_reply)
                                       q.queue.clear()
-                                      address = fr"http://localhost/nlp?trigger=false"
+                                      address = fr"http://localhost/hub/nlp?trigger=false"
                                       requests.get(address)
                                 
                                       not_done_with_Q= False
@@ -1151,7 +1151,7 @@ try:
                                       
                             
                             if ("thank you" in jres["text"]) or ("bye" in jres["text"]):
-                                address = fr"http://localhost/nlp?trigger=false"
+                                address = fr"http://localhost/hub/nlp?trigger=false"
                                 requests.get(address)
                                 
                                 not_done_with_Q= False
