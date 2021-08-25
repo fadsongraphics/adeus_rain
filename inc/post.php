@@ -11,6 +11,7 @@ if ($update_page=post('update_page')) {
 	if($update_page=='dongle_view'){
 		
 		$time_view = date('h:i')." <span style='font-weight:lighter'>".date("A")."</span>";
+		$time_view .= "&nbsp;&nbsp;&nbsp; ".date("d-m-Y"); 
 		$trigger = $db->query("SELECT value FROM meta_data WHERE meta='trigger'")->fetchArray(SQLITE3_ASSOC)['value'];
 
 		#$total_energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device_power_graph"))->fetchArray(SQLITE3_ASSOC)['SUM(last_power)'], 2);

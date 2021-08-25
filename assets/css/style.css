@@ -1,6 +1,7 @@
 body{
 	font-family: "gilroy";
 	letter-spacing: 0.05em;
+	/*background-color: black;*/
 	background-image: url("../images/banner.jpg");
 	background-repeat: no-repeat;
 	background-attachment: fixed;

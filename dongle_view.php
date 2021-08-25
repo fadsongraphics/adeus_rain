@@ -76,7 +76,7 @@ $_SESSION['exec'] = uniqid();
  <style type="text/css">
  	body{
  		margin: auto;
- 		background: pink url('assets/images/dongle_bg.png') center no-repeat;
+ 		background: #000 url('assets/images/banner.png') center no-repeat;
  		background-size: cover;
 		background-attachment:fixed;
 		overflow: hidden;
@@ -88,7 +88,8 @@ $_SESSION['exec'] = uniqid();
 
  	.circle{
  		max-width: 380px;
-		background: rgb(255,255,255,0.8);
+		background: rgb(2,198,172);
+		background: linear-gradient(135deg, rgba(2,198,172,1) 58%, rgba(2,255,0,1) 100%);
  		padding: 30px;
  		text-align: center;
  		border-radius: 30px;
@@ -96,9 +97,13 @@ $_SESSION['exec'] = uniqid();
  		padding-top: 30px;
  		font-size: 22px !important;
  		margin: auto;
+ 		transition: 1s;
+ 	}.circle:hover{
+		background: rgb(2,198,172);
+		background: linear-gradient(135deg, rgba(2,198,172,1) 10%, rgba(2,255,0,1) 100%);
  	}
 
- 	.bg-circle{
+ /*	.bg-circle{
  		font-weight: 600;
  		font-size: 1.8em !important;
 		background:#fff;
@@ -108,21 +113,45 @@ $_SESSION['exec'] = uniqid();
 		border-radius:10px;
 		box-shadow: 0 0 10px 0 rgb(0,0,0,0.2);
 		margin-bottom: 20px;
+ 	}*/
+
+ 	.big-icon{
+ 		width: 60px;
+ 		height: 60px;
+ 		background: url(assets/images/energy_icon.png) center no-repeat;
+ 		background-size: cover;
+ 		margin: auto;
+		margin-top: 30px;
+ 	}.devices-icon{
+ 		background: url(assets/images/devices_icon.png) center no-repeat;
+ 		background-size: cover;
+ 	}
+
+ 	.units{
+ 		font-weight: bolder;
+ 		color: #fff;
+ 		text-transform: uppercase;
+ 		font-size: 30px;
+		margin-top: 20px;
  	}
 
 	.title{
 		font-size: 1em !important;
-		color: black;
+		color: #fff;
+		text-transform: uppercase;
 		text-align: center;
 		font-weight: 500;
 		margin-bottom: 20px;
 	}
 
 	.bg-footer{
-		text-align: left;
+		text-align: center;
+		color: #fff;
 		line-height: 1.3em;
-		font-weight: 500;
-		font-size: 18px !important;
+		font-weight: 100;
+		margin-top: 30px;
+		font-size: 14px !important;
+		text-transform: uppercase;
 	}
 
 	.customnav{
@@ -131,46 +160,31 @@ $_SESSION['exec'] = uniqid();
 	}
 
 	.nav1{
-		background: #fff;
 		padding-right: 30px;
 		border-top-right-radius: 100px;
 		border-bottom-right-radius: 100px;
 		display: inline-block;
 	}
 
-	.dp{
-		width: 40px;
-		height: 40px;
-		border-radius: 100px;
-		background: #fff url(assets/images/male_avatar.png) center;
-		background-size: cover;
-		float:  left;
-		margin-left: -25px;
-	}
 	.navtime{
 		font-size: 24px;
-		font-weight: bolder;
-		color: black;
+		font-weight: 500;
+		color: #fff;
 		margin-left: 10px;
 		float:  left;
 		line-height: 40px;
 	}
 
-	.dp2{
-		width: 40px;
-		height: 40px;
-		background: #fff url(assets/images/weather-rain.png) center no-repeat;
-		background-size: contain;
-		margin-left: 20px;
-		float: left;
-	}
 
 	.chatbx{
 		width: 400px;
 		height: 50px;
 		margin: auto;
-		background: url(assets/images/dc.png) center no-repeat;
-		background-size: contain;
+		/*background: url(assets/images/dc.png) center no-repeat;*/
+		/*background-size: contain;*/
+		color: #fff;
+		font-weight: 600;
+		text-transform: uppercase;
 		text-align: center;
 		line-height: 1.8em;
 		transform: scale(1.3);
@@ -210,8 +224,9 @@ $_SESSION['exec'] = uniqid();
 	.shutdown{
 		width: 40px;
 		height: 40px;
+		background: url(assets/images/power_icon.png) center no-repeat;
+		background-size: cover;
 		border-radius: 100%;
-		background: #fff;
 		float: right;
 		color: red;
 		line-height: 40px;
@@ -224,7 +239,8 @@ $_SESSION['exec'] = uniqid();
 		height: 40px;
 		margin-right: 20px;
 		border-radius: 100%;
-		background: #fff;
+		background: url(assets/images/reboot_icon.png) center no-repeat;
+		background-size: cover;
 		float: right;
 		color: green;
 		line-height: 40px;
@@ -234,6 +250,8 @@ $_SESSION['exec'] = uniqid();
 
 	.update{
 		color: #418bca;
+		background: url(assets/images/update_icon.png) center no-repeat;
+		background-size: cover;
 	}
 
  </style>
@@ -243,18 +261,18 @@ $_SESSION['exec'] = uniqid();
 
  	<div class="customnav">
  		<div class="nav1">
- 			<div class="dp"></div>
- 			<div class="navtime" id="time"><?php echo date("h:i") ?> <span style="font-weight:lighter"><?php echo date("A") ?></span></div>
- 			<!-- <div class="dp2"></div> -->
- 			<!-- <div class="navtime">22<span style="font-weight:lighter">°C</span></div> -->
- 			<div class="navtime" style="font-weight:lighter;font-size: 12px;"><i class="bx bx-copyright"></i>ROBOTICS AND ARTIFICIAL INTELLIGENCE NIGERIA</div>
- 			<div style="clear:both"></div>
+ 			<div class="navtime" id="time">
+ 				<?php echo date("h:i") ?> <span style="font-weight:lighter"><?php echo date("A") ?></span>
+
+ 				&nbsp;&nbsp;&nbsp;
+ 				<?php echo date("d:m:Y") ?>
+ 			</div>
  		</div>	
 
  		<div class="nav2">
- 			<a href="?shutdown=1&sess=<?php echo $_SESSION['exec'];?>"><div class="shutdown"><i class='bx bx-power-off'></i></div></a>
- 			<a href="?restart=1&sess=<?php echo $_SESSION['exec'];?>"><div class="restart"><i class='bx bx-refresh' ></i></div></a>
- 			<a href="?update=1&sess=<?php echo $_SESSION['exec'];?>" onclick="document.getElementById('body').innerHTML =''; "><div class="update"><i class='bx bx-download'></i></div></a>
+ 			<a href="?shutdown=1&sess=<?php echo $_SESSION['exec'];?>"><div class="shutdown"></div></a>
+ 			<a href="?restart=1&sess=<?php echo $_SESSION['exec'];?>"><div class="restart"></div></a>
+ 			<a href="?update=1&sess=<?php echo $_SESSION['exec'];?>" onclick="document.getElementById('body').innerHTML =''; "><div class="update"></div></a>
  			<div style="clear: both"></div>
  		</div>
 
@@ -262,8 +280,8 @@ $_SESSION['exec'] = uniqid();
 
 
 
- 	<div class="chatbx" id='chatbx'>"Say Hello Veviain"</div>
  	<div class="vivian"></div>
+ 	<div class="chatbx" id='chatbx'>Say Hello Vevian</div>
 
  	<br>
 
@@ -274,11 +292,9 @@ $_SESSION['exec'] = uniqid();
  			<a href="index.php">
  			<div class="circle">
 			<div class="title">Consumption Balance</div>
- 				<div class="bg-circle" style="color: #3960fd">
-                    <!-- <img src="assets/svgs/energy1.svg" style="width: 30px; height: 30px;margin-right: -10px;"/> -->
- 					<span id='device_energy'><?php echo $meter_power_2;?></span>
-				</div>
- 				<div class="bg-footer">From Smart <br><span style='color: #3960fd;'>Meter</span></div>
+ 				<div class="big-icon"></div>
+ 				<div class="units" id="device_energy"></div>
+ 				<div class="bg-footer">From Smart Meters</div>
  			</div>
 	 		</a>
  		</div>
@@ -287,11 +303,9 @@ $_SESSION['exec'] = uniqid();
  			<a href="index.php">
  			<div class="circle">
 			<div class="title">Production Sale</div>
- 				<div class="bg-circle" style="color: #b76f14">
-                    <img src="assets/svgs/energy1.svg" style="width: 30px; height: 30px;margin-right: -10px;"/>
- 					<span id='meter'><?php echo $meter_power;?></span>
- 				</div>
- 				<div class="bg-footer">Total<br> <span style='color: #b76f14;'>Energy</span></div>
+ 				<div class="big-icon"></div>
+ 				<div class="units" id="meter"></div>
+ 				<div class="bg-footer">Total Energy</div>
  			</div>
 	 		</a>
  		</div>
@@ -300,11 +314,12 @@ $_SESSION['exec'] = uniqid();
  			<a href="index.php?page=devices">
  			<div class="circle">
 			<div class="title">Devices</div>
- 				<div class="bg-circle" id="devices" style="color: brown">
+ 				<div class="big-icon devices-icon"></div>
+ 				<div class="units" id="devices">
  					<?php echo $db->query("SELECT COUNT(*) AS count FROM device_active WHERE off_time>$time_buffer")->fetchArray()['count']; ?>
  					/
  					<?php echo $db->query("SELECT COUNT(*) AS count FROM device_summary")->fetchArray()['count']; ?></div>
- 				<div class="bg-footer">Connected<br>Devices</div>
+ 				<div class="bg-footer">Connected Devices</div>
  			</div>
 	 		</a>
  		</div>
@@ -338,7 +353,7 @@ $_SESSION['exec'] = uniqid();
 				if(new_trigger !== trigger){
 					if(trigger=='false'){
 						$('#greyness').fadeOut();
-						document.getElementById('chatbx').innerHTML = "\"Say Hello Veviain\"";
+						document.getElementById('chatbx').innerHTML = "Say Hello Vevian";
 					}
 					if(trigger=='true'){
 						console.log('dfdfd');
