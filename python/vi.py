@@ -121,6 +121,8 @@ soundObjpull = pygame.mixer.Sound('pull.wav')
 soundObjkwg = pygame.mixer.Sound('kwg.wav')
 soundObjeeb = pygame.mixer.Sound('eeb.wav')
 soundObjunit = pygame.mixer.Sound('unit.wav')
+soundObjgrt = pygame.mixer.Sound('grt.wav')
+soundObjc = pygame.mixer.Sound('b.wav')
 
 
 
@@ -590,9 +592,17 @@ def intent2action(intent):
     not_done_with_Q= False
     soundObja.play()
 
+  elif intent == 'time_greeting':
+        
+    soundObjgrt.play()
+    time.sleep(2)
+    t="Hey! How may I be of assistance?"
+    not_done_with_Q= False
+    soundObja.play()
+
       
   elif intent == 'Utilities_Report_Outage':
-    soundObjb.play()
+    soundObjc.play()
     time.sleep(7)
     t="Our team will respond, to your request! as soon as possible."
     not_done_with_Q= False
@@ -600,15 +610,14 @@ def intent2action(intent):
 
       
   elif intent == 'Utilities_Start_Service':
-    soundObjb.play()
+    soundObjc.play()
     time.sleep(7)
     t="Our team will respond, to your request! as soon as possible."
     not_done_with_Q= False
     soundObja.play()
       
   elif intent == 'Utilities_Stop_Service':
-    soundObjb.play()
-    time.sleep(7)
+    soundObjc.play()
     t="Our team will respond, to your request! as soon as possible."
     not_done_with_Q= False
     soundObja.play()
