@@ -80,7 +80,7 @@
 
             <div class="sidenav-logo">
 
-                <a href="dongle_view.php"><img src="assets/logo/adeus_logo.png" width="200"/></a>
+                <!-- <a href="dongle_view.php"><img src="assets/logo/adeus_logo.png" width="200"/></a> -->
 
             </div>
 
@@ -162,7 +162,7 @@
 
         </div>
 
-        <div class="sidenav-bottom">
+<!--         <div class="sidenav-bottom">
 
             <img src="assets/images/tenor.gif"/>
 
@@ -174,7 +174,7 @@
 
             </div>
 
-        </div>
+        </div> -->
 
     </div>
 
@@ -186,11 +186,11 @@
 		    <div class="nav-info">
 		    </div>
 
-		    <div class="nav-profile">
+<!-- 		    <div class="nav-profile">
 		        <img src="assets/images/male_avatar.png" style="width: inherit; height: inherit;" class="rounded-circle"/>
-		    </div>
+		    </div> -->
 
-		    <div class="nav-rates">
+<!-- 		    <div class="nav-rates">
 
 			    <div class="nav-rate-energy">Energy Rates</div>
 
@@ -202,12 +202,12 @@
 
 			    <div class="clearfix"></div>
 
-		    </div>
+		    </div> -->
 
-    		<div onclick="pager('wifi.php', '#')" class="search-icon" style="display: flex; justify-content: center; align-items: center;">
+    		<div onclick="pager('wifi.php', '#')" class="search-icon" style="display: flex; justify-content: center; align-items: center;color: #fff;">
     		    <span class="bx bx-wifi" style="font-size: 30px"></span>
     		</div>
-    		<div class="search-icon" style="display: flex; justify-content: center; align-items: center;" onclick="pager('dashboard.php', 'dashboardNav')">
+    		<div class="search-icon" style="display: flex; justify-content: center; align-items: center;color: #fff;" onclick="pager('dashboard.php', 'dashboardNav')">
     		    <span class="bx bx-refresh" style="font-size: 30px"></span>
     		</div>
 

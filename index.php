@@ -18,7 +18,9 @@ if(get('page')){
 
 }else{
 
-	require_once "dashboard.php";
+	// require_once "dashboard.php";
+	header("Location: dongle_view.php");
+	exit();
 
 }
 

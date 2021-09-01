@@ -2,11 +2,16 @@ body{
 	font-family: "gilroy";
 	letter-spacing: 0.05em;
 	/*background-color: black;*/
-	background-image: url("../images/banner.jpg");
+	background: #333 url("../images/banner.png");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
 	z-index: 10;
+}
+
+.gradient-back{
+	background: rgb(2,198,172);
+	background: linear-gradient(135deg, rgba(2,198,172,1) 58%, rgba(2,255,0,1) 100%);
 }
 
 .device-icon{
@@ -132,6 +137,8 @@ p{
 	height: 100vh;
 	float:left;
 	position: fixed;
+	background: black;
+    border-top-right-radius: 1.5rem;
 }
 
 .sidenav-top{
@@ -139,7 +146,8 @@ p{
     position: absolute;
     top: 0px;
     height: 70%;
-    border-radius: 1.5rem;
+    background: black;
+    border-top-right-radius: 1.5rem;
 }
 
 .sidenav-bottom{
@@ -178,14 +186,15 @@ p{
 .sidenav-item{
 	font-size: 15px !important;
 	padding: 5px 10px;
-	color: #333;
+	color: #fff;
 	border-radius: 10px;
 	margin-bottom: 10px;
 	transition: 0.3s;
 	font-weight: 500;
 }
 .sidenav-item:hover{
-	background: #399efd;
+	background: rgb(2,198,172);
+	background: linear-gradient(135deg, rgba(2,198,172,1) 58%, rgba(2,255,0,1) 100%);
 	cursor: pointer;
 }
 
@@ -194,8 +203,9 @@ p{
 }
 
 .sidenav-active{
-	background: #399efd;
-	color: #fff;
+	background: rgb(2,198,172);
+	background: linear-gradient(135deg, rgba(2,198,172,1) 58%, rgba(2,255,0,1) 100%);
+	color: black;
 }
 
 .sidenav-logo{

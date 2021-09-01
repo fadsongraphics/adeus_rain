@@ -19,7 +19,7 @@ if (file_exists("/var/www/adeus.db")) {
   $hub_config = json_decode(file_get_contents("/var/www/hub.config"));
   $mode = 'live';
 }else{
-  $db_loc='C:/xampp/htdocs/inc/adeus.db';
+  $db_loc='C:/xampp/htdocs/hub/inc/adeus.db';
   $hub_config = json_decode(file_get_contents("C:/xampp/htdocs/hub.config"));
   $mode = 'test';
 }

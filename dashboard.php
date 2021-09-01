@@ -11,7 +11,14 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
 ?>
 
-		<div class="row">
+
+<center>
+	<div  style="margin-top: -40px;margin-bottom: 60px;">
+	<a href="dongle_view.php"><img src="assets/logo/adeus_logo.png" width="200"/></a>
+	</div>
+</center>
+
+		<div class="row" style="display:none">
 
 			<div class="col-lg-6">
 
@@ -142,8 +149,13 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
         					    </div>
         					    <div class="col-4" style="text-align: right;">
 
-        					         <select class="br-20 d-inline" style="width: 100px; height: 45px; padding: 10px;" disabled> 
-                		                <option>Week</option>
+        					         <select class="br-20 d-inline" style="width: 150px; height: 45px; padding: 10px;" id="energyTimeSelect">
+			    		                <option value="all">All Time</option>
+			                            <option value="yesterday">Yesterday</option>
+			                            <option value="3_days">3 days ago</option>
+			                            <option value="last_week">Last Week</option>
+			                            <option value="last_month">Last Month</option>
+			                            <option value="custom">Custom</option>
                 		            </select>
 
         					    </div>
@@ -155,78 +167,8 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
 				</div>
 
-		    </div>
 
-		    <div class="col-lg-4">
 
-		        <div class="row">
-
-		            <div class="col">
-
-		                <div class="bg-2 text-white br-20 energy-card" style="position: relative;">
-
-		                    <div class="pos-top w-100">
-		                        <img src="assets/svgs/tg2.svg" style="width: 85px; height: 85px; margin: -10px 0px 0px -10px; fill: white;"/>
-		                    </div>
-
-		                    <div class="pos-left-center p-3">
-		                        <h3 id="dashboardSM" style="font-weight: 900;"><?php echo $meter_power_2;?></h3>
-
-		                        <p>Consumption<br/>Balance</p>
-		                    </div>
-
-		                    <div style="background-color: #d9d8dd; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
-		                        <span class="bx bx-right-arrow-alt" style="font-size: 20px; transform: rotate(-45deg);"></span>
-		                    </div>
-
-		                </div>
-
-		            </div>
-		            <div class="col">
-
-		                <div class="bg-1 text-white br-20 energy-card" style="position: relative;">
-
-		                    <div class="pos-top w-100">
-		                        <img src="assets/svgs/we2.svg" style="width: 70px; height: 70px; fill: white;"/>
-		                    </div>
-
-		                    <div class="pos-left-center p-3">
-		                        <h3 style="font-weight: 900;"><?php echo $meter_power;?></h3>
-
-		                        <p>Production<br/>Sale</p>
-		                    </div>
-
-		                    <div style="background-color: #dadee6; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
-		                        <span class="bx bx-right-arrow-alt" style="font-size: 20px; transform: rotate(45deg);"></span>
-		                    </div>
-
-		                </div>
-
-		            </div>
-
-		        </div>
-
-		        <div class="row mt-4">
-
-		            <div class="col-12">
-
-		                <select id="energyTimeSelect" style="border-radius: 24px; height: 60px; width: 100%; border: none; padding: 10px;">
-    		                <option value="all">All Time</option>
-                            <option value="yesterday">Yesterday</option>
-                            <option value="3_days">3 days ago</option>
-                            <option value="last_week">Last Week</option>
-                            <option value="last_month">Last Month</option>
-                            <option value="custom">Custom</option>
-
-    		            </select>
-
-		            </div>
-
-		        </div>
-
-		    </div>
-
-		</div>
 
 		<div class="row mt-4">
 
@@ -354,6 +296,94 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 		            	</table>
 		            </div>
 				</div>
+
+		    </div>
+
+		</div>
+
+
+
+		    </div>
+
+		    <div class="col-lg-4">
+
+		        <div class="row">
+
+		            <div class="col">
+
+		                <div class="bg-2 text-white br-20 energy-card" style="position: relative;">
+
+		                    <div class="pos-top w-100">
+		                        <img src="assets/svgs/tg2.svg" style="width: 85px; height: 85px; margin: -10px 0px 0px -10px; fill: white;"/>
+		                    </div>
+
+		                    <div class="pos-left-center p-3">
+		                        <h3 id="dashboardSM" style="font-weight: 900;"><?php echo $meter_power_2;?></h3>
+
+		                        <p>Consumption<br/>Balance</p>
+		                    </div>
+
+		                    <div style="border: 1px solid #fff ;display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
+		                        <span class="bx bx-right-arrow-alt" style="font-size: 20px;"></span>
+		                    </div>
+
+		                </div>
+
+		            </div>
+		            <div class="col">
+
+		                <div class="text-white br-20 energy-card gradient-back" style="position: relative;">
+
+		                    <div class="pos-top w-100">
+		                        <img src="assets/svgs/we2.svg" style="width: 70px; height: 70px; fill: white;"/>
+		                    </div>
+
+		                    <div class="pos-left-center p-3">
+		                        <h3 style="font-weight: 900;"><?php echo $meter_power;?></h3>
+
+		                        <p>Production<br/>Sale</p>
+		                    </div>
+
+		                    <div style="background-color: #dadee6; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
+		                        <span class="bx bx-right-arrow-alt" style="font-size: 20px; transform: rotate(45deg);"></span>
+		                    </div>
+
+		                </div>
+
+		            </div>
+
+		        </div>
+
+		        <div class="row mt-4">
+
+		            <div class="col-12">
+
+		                <!-- <select id="energyTimeSelect" style="border-radius: 24px; height: 60px; width: 100%; border: none; padding: 10px;">
+    		                <option value="all">All Time</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="3_days">3 days ago</option>
+                            <option value="last_week">Last Week</option>
+                            <option value="last_month">Last Month</option>
+                            <option value="custom">Custom</option>
+
+    		            </select> -->
+
+		            <div class="br-20 gradient-back" style="margin-top: 10px; left: 10px; width: 200px; font-size: 16px;color: #fff;text-align: center;padding: 20px;">
+
+		                <p>Hi! I'm Viviene. The Market looks nice today !!</p>
+
+		                <br>
+
+		                <p>See More <i class="bx bx-right-arrow-alt" style="font-size: inherit; line-height: inherit;"></i></p>
+
+		            </div>
+
+
+
+		            </div>
+
+		        </div>
+
 
 		    </div>
 

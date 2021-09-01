@@ -289,7 +289,7 @@ $_SESSION['exec'] = uniqid();
  	<div class="row">
 
  		<div class="col">
- 			<a href="index.php">
+ 			<a href="index.php?page=dashboard">
  			<div class="circle">
 			<div class="title">Consumption Balance</div>
  				<div class="big-icon"></div>
@@ -300,7 +300,7 @@ $_SESSION['exec'] = uniqid();
  		</div>
 
  		<div class="col">
- 			<a href="index.php">
+ 			<a href="index.php?page=dashboard">
  			<div class="circle">
 			<div class="title">Production Sale</div>
  				<div class="big-icon"></div>
