@@ -28,11 +28,11 @@ require_once "inc/conn.php";
 
 <div class="row">
 	<br>
-	<h2>Connect to Wifi</h2>
+	<h2 style="color: #fff;">Connect to Wifi</h2>
 
     <div class="col-5">
 
-        <div class="glass br-20 p-3">
+        <div class="br-20 p-3 gradient-back">
 
 
 
