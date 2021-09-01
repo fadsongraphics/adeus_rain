@@ -134,7 +134,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
         					            <div style="width: 15px; height: 15px; background-color: #2d62ed; display: inline-block; border-radius: 5px"></div>
 
-        					            Consumption Balance
+        					            CONSUMPTION BALANCE
 
         					        </span>
 
@@ -142,7 +142,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 
         					            <div style="width: 15px; height: 15px; background-color: #02bc47; display: inline-block; border-radius: 5px"></div>
 
-        					            Production Sale
+        					            PRODUCTION SALE
 
         					        </span>
 
