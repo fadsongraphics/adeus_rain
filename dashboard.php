@@ -320,7 +320,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 		                    <div class="pos-left-center p-3">
 		                        <h3 id="dashboardSM" style="font-weight: 900;"><?php echo $meter_power_2;?></h3>
 
-		                        <p>Consumption<br/>Balance</p>
+		                        <p>CONSUMPTION<br/>BALANCE</p>
 		                    </div>
 
 		                    <div style="border: 1px solid #fff ;display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
@@ -341,7 +341,7 @@ $meter_power_2 = energy_format(($db->query("SELECT SUM(total_power) FROM meter_s
 		                    <div class="pos-left-center p-3">
 		                        <h3 style="font-weight: 900;"><?php echo $meter_power;?></h3>
 
-		                        <p>Production<br/>Sale</p>
+		                        <p>PRODUCTION<br/>SALE</p>
 		                    </div>
 
 		                    <div style="background-color: #dadee6; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;" class="rounded-circle p-3 pos-br">
