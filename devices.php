@@ -584,7 +584,7 @@ $energy_consumed = energy_format(($db->query("SELECT SUM(last_power) FROM device
 		</div>
 
 		<br>
-		<!-- <button class="btn btn-primary" onclick="add_device()" style="width: 100%;"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">+ ADD</button> -->
+		<button class="btn btn-primary" onclick="add_device()" style="width: 100%;"  data-bs-toggle="offcanvas" data-bs-target="#offcanvasDevice" aria-controls="offcanvasDevice">+ ADD</button>
 
 
 	  </div>
